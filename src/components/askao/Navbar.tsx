@@ -9,7 +9,7 @@ const links = [
   { href: "#competencies", label: "Компетенции" },
   { href: "#scale", label: "Масштаб" },
   { href: "#members", label: "Участники" },
-  { href: "#news", label: "Новости" },
+  { href: "/news", label: "Новости", isRoute: true },
   { href: "#contacts", label: "Контакты" },
 ];
 
