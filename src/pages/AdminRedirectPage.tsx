@@ -1,5 +1,11 @@
-import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const AdminRedirectPage = () => <Navigate to="/" replace />;
+const AdminRedirectPage = () => {
+  useEffect(() => {
+    window.location.replace("/admin/index.html");
+  }, []);
+
+  return null;
+};
 
 export default AdminRedirectPage;

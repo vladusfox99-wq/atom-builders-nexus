@@ -1,0 +1,59 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: public/uploads
+public_folder: /uploads
+
+site_url: /
+display_url: /
+logo_url: /favicon.ico
+locale: ru
+
+collections:
+  - name: news
+    label: Новости
+    label_singular: Новость
+    folder: src/content/cms/news
+    create: true
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    sortable_fields:
+      - date
+      - title
+      - tag
+    summary: "{{date}} — {{title}}"
+    fields:
+      - label: Slug
+        name: slug
+        widget: string
+        hint: Латиница, дефисы. Используется как идентификатор файла.
+        pattern:
+          - "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          - Разрешены только строчные латинские буквы, цифры и дефис.
+      - label: Заголовок
+        name: title
+        widget: string
+      - label: Дата
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+      - label: Тег
+        name: tag
+        widget: string
+      - label: Краткое описание
+        name: excerpt
+        widget: text
+      - label: Параграфы
+        name: content
+        widget: list
+        summary: "{{fields.text}}"
+        field:
+          label: Текст
+          name: text
+          widget: text

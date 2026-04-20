@@ -2,7 +2,7 @@ import heroImg from "@/assets/hero-nuclear.jpg";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-end overflow-hidden pt-32 pb-20">
+    <section className="relative min-h-screen flex items-end overflow-hidden pt-32 pb-36 md:pb-44">
       <div className="absolute inset-0">
         <img src={heroImg} alt="Строительство АЭС" width={1920} height={1080} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-hero" />

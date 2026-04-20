@@ -9,14 +9,14 @@ export interface Member {
 export const members: Member[] = [
   {
     name: "ОЦКС Росатома",
-    logo: "https://static3.tildacdn.com/tild6430-3565-4633-a238-373834653337/logotip-oczks.jpg",
+    logo: "/member-logos-traced/logotip-oczks-2ce487be11.svg",
     description:
       "Функциональный центр Госкорпорации «Росатом» по контролю, регулированию и совершенствованию процессов управления и реализации инвестиционно-строительных проектов атомной отрасли.",
     category: "Управление",
   },
   {
     name: "АО «ЦПТИ»",
-    logo: "https://static3.tildacdn.com/tild3230-6432-4266-b733-313832383039/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--f3dd511394.svg",
     description:
       "Центральный проектно-технологический институт — интегрированная компания, занимающаяся разработкой цифровых продуктов и услуг в направлении проектно-конструкторской деятельности.",
     category: "Проектирование",
@@ -37,7 +37,7 @@ export const members: Member[] = [
   },
   {
     name: "ФЯО ФГУП «ГХК»",
-    logo: "https://static3.tildacdn.com/tild6330-3738-4364-b438-366234393562/Ghk_logo.jpg",
+    logo: "/member-logos-traced/Ghk_logo-ce2f6a8310.svg",
     description:
       "Горно-химический комбинат — предприятие Госкорпорации «Росатом», уникальное атомное производство, не имеющее аналогов в отечественной и мировой практике.",
     category: "Производство",
@@ -58,7 +58,7 @@ export const members: Member[] = [
   },
   {
     name: "АО «Энергоспецмонтаж»",
-    logo: "https://thb.tildacdn.com/tild6461-3463-4432-b734-636336363161/-/empty/logotip-energospeczm.jpg",
+    logo: "/member-logos-traced/logotip-energospeczm-10b11baddc.svg",
     description:
       "Более 2500 специалистов по механомонтажным работам на строительстве АЭС, опытно-промышленных установок, объектов теплоэнергетики и химических производств.",
     category: "Строительство",
@@ -86,21 +86,21 @@ export const members: Member[] = [
   },
   {
     name: "Прогресс-Экология",
-    logo: "https://thb.tildacdn.com/tild6632-3863-4738-b538-323235313234/-/empty/logos1-p-ecology_1.jpg",
+    logo: "/member-logos-traced/logos1-p-ecology_1-d8657555d9.svg",
     description:
       "Крупнейший российский поставщик фильтровального и сорбирующего оборудования для АЭС внутри страны и для зарубежных проектов с участием РФ.",
     category: "Оборудование",
   },
   {
     name: "АО «Институт «Оргэнергострой»",
-    logo: "https://thb.tildacdn.com/tild6130-3364-4334-b937-396530613365/-/empty/logos1-orgenergostro.jpg",
+    logo: "/member-logos-traced/logos1-orgenergostro-7a1de4ed78.svg",
     description:
       "Многопрофильная строительная компания с более чем 60-летним опытом возведения энергетических, нефтегазовых и промышленных объектов в России и за рубежом.",
     category: "Строительство",
   },
   {
     name: "Корпорация АК «ЭСКМ»",
-    logo: "https://thb.tildacdn.com/tild6333-3934-4266-b037-353661616562/-/empty/tovarnyij-znak.jpg",
+    logo: "/member-logos-traced/tovarnyij-znak-18b0643813.svg",
     description:
       "Электромонтажные работы на объектах электроэнергетического строительства. Преемник треста «Электросевкавмонтаж», основанного в 1985 году.",
     category: "Строительство",
@@ -142,14 +142,14 @@ export const members: Member[] = [
   },
   {
     name: "ФЕНСМА",
-    logo: "https://thb.tildacdn.com/tild3032-3131-4336-a662-626331346535/-/empty/fensma-924x216-askao.jpg",
+    logo: "/member-logos-traced/fensma-924x216-askao-10d82c7e9b.svg",
     description:
       "Многопрофильная строительная компания, выступающая в роли генерального подрядчика, с обширным опытом строительства нулевого цикла.",
     category: "Строительство",
   },
   {
     name: "ФГУП «Элерон»",
-    logo: "https://thb.tildacdn.com/tild3966-3737-4161-b733-386339333666/-/empty/eleron-logotip.jpg",
+    logo: "/member-logos-traced/eleron-logotip-eaee5b8a63.svg",
     description:
       "Крупнейшее в стране научно-исследовательское, проектно-конструкторское предприятие по созданию технических средств охраны и систем безопасности объектов.",
     category: "Безопасность",
@@ -170,14 +170,14 @@ export const members: Member[] = [
   },
   {
     name: "ЕВРОСТРОЙСЕРВИС",
-    logo: "https://thb.tildacdn.com/tild3766-3963-4334-b761-383366653962/-/empty/ooo-evrostrojservis.jpg",
+    logo: "/member-logos-traced/ooo-evrostrojservis-8b7f75c241.svg",
     description:
       "Строительство и реконструкция объектов промышленного назначения — основное направление деятельности компании.",
     category: "Строительство",
   },
   {
     name: "Сервис-Газификация",
-    logo: "https://thb.tildacdn.com/tild3365-6630-4161-b662-376265636330/-/empty/servis-gazifikacziya.jpg",
+    logo: "/member-logos-traced/servis-gazifikacziya-3981ac2724.svg",
     description:
       "Строительный контроль за качеством строительства, реконструкции и капитального ремонта объектов добычи и транспорта нефти и газа.",
     category: "Контроль",
@@ -198,14 +198,14 @@ export const members: Member[] = [
   },
   {
     name: "ЗАО НПО «НАТЭК-Нефтехиммаш»",
-    logo: "https://thb.tildacdn.com/tild3664-3562-4364-b838-303235373635/-/empty/natek.jpg",
+    logo: "/member-logos-traced/natek-67904ef1ab.svg",
     description:
       "Современное научно-производственное объединение, успешно работающее на российском рынке с 1992 года.",
     category: "Производство",
   },
   {
     name: "Трубошпунт инжиниринг",
-    logo: "https://thb.tildacdn.com/tild3537-6136-4038-a331-306261343730/-/empty/truboshpunt-inzhinir.jpg",
+    logo: "/member-logos-traced/truboshpunt-inzhinir-fea8f58846.svg",
     description:
       "Инжиниринговые услуги исследовательского, проектно-конструкторского, расчётно-аналитического характера.",
     category: "Инжиниринг",
@@ -219,14 +219,14 @@ export const members: Member[] = [
   },
   {
     name: "Бергауф Строительные технологии",
-    logo: "https://thb.tildacdn.com/tild3131-3130-4939-a133-656634366139/-/empty/bergauf-1.jpg",
+    logo: "/member-logos-traced/bergauf-1-2e15808c31.svg",
     description:
       "Российская компания, входящая в пятёрку лидеров России и СНГ по производству сухих строительных смесей.",
     category: "Материалы",
   },
   {
     name: "Вест-Инжиниринг",
-    logo: "https://thb.tildacdn.com/tild3334-6131-4366-b132-386365363839/-/empty/vest-inzhiniring.jpg",
+    logo: "/member-logos-traced/vest-inzhiniring-86bcde7b5b.svg",
     description:
       "Производственное предприятие полного цикла — от идеи до изготовления и введения оборудования в эксплуатацию.",
     category: "Производство",
@@ -240,7 +240,7 @@ export const members: Member[] = [
   },
   {
     name: "ДОНРЕМСТРОЙ-12",
-    logo: "https://thb.tildacdn.com/tild3339-3231-4264-b865-313631343939/-/empty/logo-1.jpg",
+    logo: "/member-logos-traced/logo-1-744511b867.svg",
     description:
       "С 2000 года работает на рынках строительно-монтажных и огнезащитных работ и услуг России.",
     category: "Строительство",
@@ -254,7 +254,7 @@ export const members: Member[] = [
   },
   {
     name: "AKRON HOLDING",
-    logo: "https://thb.tildacdn.com/tild3735-6633-4236-b834-333638653336/-/empty/logotip-ax.jpg",
+    logo: "/member-logos-traced/logotip-ax-91882539ca.svg",
     description:
       "Металлургический холдинг полного цикла: заготовка и переработка лома и отходов чёрных и цветных металлов, утилизация транспортных средств и техники.",
     category: "Материалы",
@@ -275,28 +275,28 @@ export const members: Member[] = [
   },
   {
     name: "СтройТехСистема",
-    logo: "https://thb.tildacdn.com/tild3462-3533-4463-b966-373262663339/-/empty/photo_54201918798211.jpg",
+    logo: "/member-logos-traced/photo_54201918798211-3248750187.svg",
     description:
       "Современная высокотехнологичная компания: строительство и реконструкция объектов атомной электроэнергетики, нефтепереработки и нефтехимии.",
     category: "Строительство",
   },
   {
     name: "ИБ «Хоссер»",
-    logo: "https://thb.tildacdn.com/tild3461-3137-4565-b962-623335386233/-/empty/xosser-rus.jpg",
+    logo: "/member-logos-traced/xosser-rus-6e18ae4ed8.svg",
     description:
       "Российская инжиниринговая компания в области здравоохранения с более чем 25-летним опытом проектирования и строительства медицинских объектов.",
     category: "Инжиниринг",
   },
   {
     name: "ЗАО «НПК Эллирон»",
-    logo: "https://thb.tildacdn.com/tild3861-3533-4064-b863-393536316538/-/empty/logo-zao-npk-elliron.jpg",
+    logo: "/member-logos-traced/logo-zao-npk-elliron-e79aad63c9.svg",
     description:
       "Производство в кооперации с ведущими машиностроительными заводами России и зарубежья — изделия мирового стандарта качества.",
     category: "Производство",
   },
   {
     name: "АО «ГМЗ «Химмаш»",
-    logo: "https://thb.tildacdn.com/tild3631-3837-4162-a432-356662383430/-/empty/novyij-logo-01.jpg",
+    logo: "/member-logos-traced/novyij-logo-01-4dcc555d6e.svg",
     description:
       "Инжиниринг по строительству новых и модернизации существующих энергетических мощностей на промышленных предприятиях и объектах энергетики.",
     category: "Инжиниринг",
@@ -324,7 +324,7 @@ export const members: Member[] = [
   },
   {
     name: "СК «Райдекс»",
-    logo: "https://thb.tildacdn.com/tild6463-3730-4638-a234-363765316534/-/empty/logo-1-rajdeks.jpg",
+    logo: "/member-logos-traced/logo-1-rajdeks-f582b3d931.svg",
     description:
       "Лидирующая компания в области устройства буронабивных свай.",
     category: "Строительство",
@@ -338,7 +338,7 @@ export const members: Member[] = [
   },
   {
     name: "Партнёр-ТТ",
-    logo: "https://thb.tildacdn.com/tild6339-3261-4130-a531-393634616538/-/empty/pttlogoreliz.jpg",
+    logo: "/member-logos-traced/pttlogoreliz-ae2ace1fd3.svg",
     description:
       "Официальный представитель производителя трансформаторов «Тольяттинский Трансформатор» на территории СФО и ДВФО.",
     category: "Оборудование",
@@ -352,56 +352,56 @@ export const members: Member[] = [
   },
   {
     name: "Крок",
-    logo: "https://thb.tildacdn.com/tild6234-6234-4330-b932-393664643232/-/empty/logotip-krok-1.jpg",
+    logo: "/member-logos-traced/logotip-krok-1-0941c9a9e6.svg",
     description:
       "Сервисная компания: производство и поставка оборудования, услуги в области очистки и обслуживания технологического оборудования.",
     category: "Сервис",
   },
   {
     name: "Инженерный центр",
-    logo: "https://thb.tildacdn.com/tild3466-3266-4636-b431-383937333532/-/empty/icz.jpg",
+    logo: "/member-logos-traced/icz-3c504b3edf.svg",
     description:
       "Разработка проектной и рабочей документации, расчёты конструкций и систем, ППР для сооружения объектов гражданского, промышленного и атомного назначения.",
     category: "Проектирование",
   },
   {
     name: "Новикомбанк",
-    logo: "https://thb.tildacdn.com/tild3432-3238-4439-a364-616565306633/-/empty/photo_54201918798211.jpg",
+    logo: "/member-logos-traced/photo_54201918798211-fa9f81f6aa.svg",
     description:
       "Поддерживает устойчивые связи с партнёрами и клиентами, участвует в работе ведущих общественных объединений финансовой и промышленной сфер.",
     category: "Финансы",
   },
   {
     name: "АЛГОНТ",
-    logo: "https://thb.tildacdn.com/tild3231-6336-4439-b034-663366353635/-/empty/algont-logotip.jpg",
+    logo: "/member-logos-traced/algont-logotip-be6aab76fd.svg",
     description:
       "Более 30 лет — разработка, производство и внедрение интеллектуальных систем безопасности от террористических атак и киберугроз.",
     category: "Безопасность",
   },
   {
     name: "НИЦ «Строительство»",
-    logo: "https://thb.tildacdn.com/tild3636-6635-4334-a435-376466643865/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--9668b84eb8.svg",
     description:
       "Лидирующая позиция в области строительных наук и архитектуры, реализация государственных программ и общенациональных проектов.",
     category: "Наука",
   },
   {
     name: "АО «Сиб.ТПЭП»",
-    logo: "https://thb.tildacdn.com/tild3062-3333-4261-b534-653139373361/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--735312352d.svg",
     description:
       "Проектно-изыскательские работы для объектов электроснабжения и электрооборудования предприятий.",
     category: "Проектирование",
   },
   {
     name: "Энерготэк",
-    logo: "https://thb.tildacdn.com/tild6432-3431-4966-a331-346463333730/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--3c6008d544.svg",
     description:
       "Разработчик и производитель полимерных систем для прокладки и защиты кабельных линий — повышение надёжности ЛЭП и безопасности персонала.",
     category: "Материалы",
   },
   {
     name: "Деталь Проект",
-    logo: "https://thb.tildacdn.com/tild3634-6533-4031-b039-623735333137/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--a1dffeb75f.svg",
     description:
       "Проектно-конструкторские работы, изготовление, монтаж и обслуживание оборудования для атомной, нефтегазоперерабатывающей промышленности и машиностроения.",
     category: "Оборудование",
@@ -415,77 +415,77 @@ export const members: Member[] = [
   },
   {
     name: "ТЕХНОНИКОЛЬ",
-    logo: "https://thb.tildacdn.com/tild3438-3464-4437-b434-646536323963/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--03eff4af33.svg",
     description:
       "Ведущий международный производитель надёжных и эффективных строительных материалов и систем.",
     category: "Материалы",
   },
   {
     name: "Интер РАО — Инжиниринг",
-    logo: "https://thb.tildacdn.com/tild3335-6662-4164-b832-396465633637/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--f89b5b3d8a.svg",
     description:
       "Услуги для реализации любых этапов инжиниринговых проектов — комплексные предложения и отдельные виды работ.",
     category: "Инжиниринг",
   },
   {
     name: "ГСК «REформа»",
-    logo: "https://thb.tildacdn.com/tild3639-3362-4366-b332-363839393963/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--0a4c17aaf0.svg",
     description:
       "Комплексные работы по инженерным сетям и демонтажу на промышленных объектах любой сложности.",
     category: "Строительство",
   },
   {
     name: "Енер-холдинг",
-    logo: "https://thb.tildacdn.com/tild3531-3562-4762-b831-393561656635/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--69672157c1.svg",
     description:
       "Полный комплекс строительно-монтажных работ. Выступает в качестве генерального подрядчика и проектировщика.",
     category: "Строительство",
   },
   {
     name: "Каскад-Энерго",
-    logo: "https://thb.tildacdn.com/tild6138-6131-4930-a633-346131373731/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--4e017f91f0.svg",
     description:
       "Производство и монтаж электрооборудования для жилых, промышленных, административных помещений; проектирование и строительство.",
     category: "Строительство",
   },
   {
     name: "АДМ-телеком",
-    logo: "https://thb.tildacdn.com/tild3635-3161-4263-a662-653064373938/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--ab308aa063.svg",
     description:
       "С 2002 года — разработка информационно-справочных и CRM-систем; полный цикл от обследования до техподдержки внедрённых продуктов.",
     category: "Цифровизация",
   },
   {
     name: "АО «ЦКБМ»",
-    logo: "https://thb.tildacdn.com/tild6566-3938-4161-a634-323830636633/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--175dd7f128.svg",
     description:
       "Центральное конструкторское бюро машиностроения. С 1945 года — насосное и дистанционно-управляемое оборудование для объектов атомной энергетики.",
     category: "Оборудование",
   },
   {
     name: "НТЦ Диапром",
-    logo: "https://thb.tildacdn.com/tild3835-6561-4933-a435-306162666237/-/empty/photo_2023-09-03_22-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_22--097be864a4.svg",
     description:
       "Техническое диагностирование и экспертиза промышленной безопасности технических устройств на объектах добычи, транспорта и переработки углеводородов.",
     category: "Безопасность",
   },
   {
     name: "ЮМАТЕКС",
-    logo: "https://thb.tildacdn.com/tild3363-3265-4539-a436-626138633033/-/empty/photo_2023-09-03_23-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_23--e4090512e0.svg",
     description:
       "Научно-технический потенциал для совершенствования и внедрения технологий получения ПАН-прекурсоров и углеродных волокон.",
     category: "Материалы",
   },
   {
     name: "ПромМаш Тест Экспертиза",
-    logo: "https://thb.tildacdn.com/tild3062-3264-4865-a565-386331363734/-/empty/photo_2023-09-03_23-.jpg",
+    logo: "/member-logos-traced/photo_2023-09-03_23--838d5fdf92.svg",
     description:
       "Негосударственная экспертиза проектной документации и результатов инженерных изысканий.",
     category: "Контроль",
   },
   {
     name: "АО «РАСУ»",
-    logo: "https://thb.tildacdn.com/tild3265-3931-4331-b964-343931663137/-/empty/2914_big_1634195980_.jpg",
+    logo: "/member-logos-traced/2914_big_1634195980_-5dc11d5c12.svg",
     description:
       "Русатом Автоматизированные системы управления — комплексные решения по проектированию, разработке и обслуживанию АСУ ТП на объектах атомной энергетики и в промышленности.",
     category: "Цифровизация",
@@ -506,7 +506,7 @@ export const members: Member[] = [
   },
   {
     name: "Приборный завод «Тензор»",
-    logo: "https://thb.tildacdn.com/tild3438-3838-4165-b838-386537626266/-/empty/tenzor_logotip_copy_.jpg",
+    logo: "/member-logos-traced/tenzor_logotip_copy_-c867732cc9.svg",
     description:
       "Один из лидеров на рынке средств и компонентов систем пожарной защиты, физической защиты, АСУ ТП.",
     category: "Безопасность",
@@ -527,14 +527,14 @@ export const members: Member[] = [
   },
   {
     name: "Апекс Групп",
-    logo: "https://thb.tildacdn.com/tild3665-6534-4365-b162-653230633861/-/empty/e8ffefdf-5991-48b7-a.jpg",
+    logo: "/member-logos-traced/e8ffefdf-5991-48b7-a-75936923ab.svg",
     description:
       "Надёжный партнёр крупнейших отечественных и работающих в России иностранных компаний; цель — статус международного генерального подрядчика.",
     category: "Строительство",
   },
   {
     name: "ООО «РКС-НР»",
-    logo: "https://thb.tildacdn.com/tild6163-3434-4261-b639-393964663162/-/empty/logo-rks-nr.jpg",
+    logo: "/member-logos-traced/logo-rks-nr-563dceebc7.svg",
     description:
       "Дочернее предприятие ФАУ «РосКапСтрой». Услуги генерального подрядчика и технического заказчика в проектах жилищного и инфраструктурного строительства федерального значения.",
     category: "Строительство",
