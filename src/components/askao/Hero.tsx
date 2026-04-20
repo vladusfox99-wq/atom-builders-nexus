@@ -14,7 +14,7 @@ const Hero = () => {
       <div className="absolute top-32 right-8 hidden md:flex flex-col items-end gap-2 text-xs font-mono text-muted-foreground">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 bg-primary animate-pulse-glow" />
-          <span>SYSTEM ONLINE · 2025</span>
+          <span>SYSTEM ONLINE · 2026</span>
         </div>
         <div>52°N / 38°E · РОССИЯ</div>
       </div>
