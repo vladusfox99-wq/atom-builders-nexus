@@ -8,7 +8,7 @@ const links = [
   { href: "#activities", label: "Деятельность" },
   { href: "#competencies", label: "Компетенции" },
   { href: "#scale", label: "Масштаб" },
-  { href: "#members", label: "Участники" },
+  { href: "/members", label: "Участники", isRoute: true },
   { href: "/news", label: "Новости", isRoute: true },
   { href: "#contacts", label: "Контакты" },
 ];
