@@ -8,7 +8,6 @@ import Members from "@/components/askao/Members";
 import Innovations from "@/components/askao/Innovations";
 import Benefits from "@/components/askao/Benefits";
 import News from "@/components/askao/News";
-import CTA from "@/components/askao/CTA";
 import Contacts from "@/components/askao/Contacts";
 import Footer from "@/components/askao/Footer";
 
@@ -25,7 +24,6 @@ const Index = () => {
       <Innovations />
       <Benefits />
       <News />
-      <CTA />
       <Contacts />
       <Footer />
     </main>

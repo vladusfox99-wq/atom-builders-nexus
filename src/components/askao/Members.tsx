@@ -5,7 +5,6 @@ const companies = [
   "РОСАТОМ ОВЕРСИЗ", "ЦПТИ", "ЭНЕРГОСПЕЦМОНТАЖ", "АТОМЭНЕРГОМАШ", "СПБАЭП",
 ];
 
-// duplicate for seamless ticker
 const row1 = [...companies.slice(0, 10), ...companies.slice(0, 10)];
 const row2 = [...companies.slice(10), ...companies.slice(10)];
 
@@ -32,12 +31,6 @@ const Members = () => (
     <div className="space-y-4">
       <div className="flex animate-ticker">{row1.map((c, i) => <Logo key={i} name={c} />)}</div>
       <div className="flex animate-ticker [animation-direction:reverse]">{row2.map((c, i) => <Logo key={i} name={c} />)}</div>
-    </div>
-
-    <div className="container mt-16 text-center">
-      <a href="#cta" className="inline-flex items-center gap-2 text-primary font-semibold hover:text-primary-glow transition-colors">
-        Полный список участников →
-      </a>
     </div>
   </section>
 );

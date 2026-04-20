@@ -29,13 +29,6 @@ const Benefits = () => (
             <p className="text-sm text-muted-foreground leading-relaxed">{b.text}</p>
           </div>
         ))}
-        <a href="#cta" className="group relative p-8 border border-primary bg-gradient-accent hover:shadow-glow transition-all duration-500 hover:-translate-y-1 flex flex-col justify-between min-h-[240px]">
-          <ArrowUpRight className="text-primary-foreground group-hover:rotate-45 transition-transform self-end" size={32} />
-          <div>
-            <h3 className="font-display text-2xl font-bold text-primary-foreground mb-2">Подать заявку</h3>
-            <p className="text-sm text-primary-foreground/80">Присоединяйтесь к ассоциации сегодня</p>
-          </div>
-        </a>
       </div>
     </div>
   </section>

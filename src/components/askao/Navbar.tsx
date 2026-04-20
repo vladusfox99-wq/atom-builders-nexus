@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import Logo from "@/components/askao/Logo";
 
 const links = [
-  { href: "#about", label: "О нас" },
+  { href: "/about", label: "О нас", isRoute: true },
   { href: "#activities", label: "Деятельность" },
   { href: "#competencies", label: "Компетенции" },
   { href: "#scale", label: "Масштаб" },
@@ -14,6 +16,8 @@ const links = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const sectionBase = location.pathname === "/" ? "" : "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -28,37 +32,35 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex items-center justify-between h-20">
-        <a href="#" className="flex items-center gap-3 group">
-          <div className="relative w-10 h-10 grid place-items-center bg-gradient-accent shadow-glow">
-            <div className="absolute inset-[3px] bg-navy-deep grid place-items-center">
-              <span className="font-display font-bold text-primary text-lg leading-none">А</span>
-            </div>
-          </div>
-          <div className="leading-tight">
-            <div className="font-display font-bold tracking-tight text-foreground">АСКАО</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Атомная отрасль</div>
-          </div>
-        </a>
+        <Link to="/" className="group">
+          <Logo imageClassName="h-14" />
+        </Link>
 
         <nav className="hidden lg:flex items-center gap-8">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
-            >
-              {l.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
-            </a>
-          ))}
+          {links.map((link) =>
+            link.isRoute ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={`relative group text-sm font-medium transition-colors ${
+                  location.pathname === link.href ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {link.label}
+                <span className={`absolute -bottom-1 left-0 h-px bg-primary transition-all duration-300 ${location.pathname === link.href ? "w-full" : "w-0 group-hover:w-full"}`} />
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={`${sectionBase}${link.href}`}
+                className="relative group text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-primary transition-all duration-300 group-hover:w-full" />
+              </a>
+            ),
+          )}
         </nav>
-
-        <a
-          href="#cta"
-          className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary-glow transition-colors"
-        >
-          Стать участником
-        </a>
 
         <button onClick={() => setOpen(!open)} className="lg:hidden p-2 text-foreground" aria-label="Меню">
           {open ? <X size={22} /> : <Menu size={22} />}
@@ -66,16 +68,19 @@ const Navbar = () => {
       </div>
 
       {open && (
-        <div className="lg:hidden bg-navy-deep/95 backdrop-blur-xl border-t border-border animate-fade-in">
-          <nav className="container flex flex-col py-6 gap-4">
-            {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-base font-medium text-muted-foreground hover:text-foreground py-2">
-                {l.label}
-              </a>
-            ))}
-            <a href="#cta" onClick={() => setOpen(false)} className="mt-2 inline-flex items-center justify-center px-5 py-3 bg-primary text-primary-foreground font-semibold">
-              Стать участником
-            </a>
+        <div className="lg:hidden border-t border-border bg-navy-deep/95 backdrop-blur-xl animate-fade-in">
+          <nav className="container flex flex-col gap-4 py-6">
+            {links.map((link) =>
+              link.isRoute ? (
+                <Link key={link.href} to={link.href} onClick={() => setOpen(false)} className="py-2 text-base font-medium text-muted-foreground hover:text-foreground">
+                  {link.label}
+                </Link>
+              ) : (
+                <a key={link.href} href={`${sectionBase}${link.href}`} onClick={() => setOpen(false)} className="py-2 text-base font-medium text-muted-foreground hover:text-foreground">
+                  {link.label}
+                </a>
+              ),
+            )}
           </nav>
         </div>
       )}
