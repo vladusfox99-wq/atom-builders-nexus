@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import AboutPage from "./pages/AboutPage.tsx";
 import NewsPage from "./pages/NewsPage.tsx";
 import MembersPage from "./pages/MembersPage.tsx";
+import ClustersPage from "./pages/ClustersPage.tsx";
 import AdminRedirectPage from "./pages/AdminRedirectPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/about" element={<AboutPage />} />
           <Route path="/news" element={<NewsPage />} />
           <Route path="/members" element={<MembersPage />} />
+          <Route path="/clusters" element={<ClustersPage />} />
           <Route path="/admin/*" element={<AdminRedirectPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

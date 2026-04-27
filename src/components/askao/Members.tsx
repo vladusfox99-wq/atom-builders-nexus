@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { memberLogos } from "@/content/memberLogos";
 
+const PREVIEW_ROWS = 5;
+const PREVIEW_COLUMNS_LG = 6;
+
 const Members = () => {
-  const preview = memberLogos;
+  const preview = memberLogos.slice(0, PREVIEW_ROWS * PREVIEW_COLUMNS_LG);
 
   return (
     <section id="members" className="relative py-24 md:py-32 overflow-hidden bg-navy">
@@ -17,7 +20,7 @@ const Members = () => {
             </h2>
           </div>
           <p className="text-muted-foreground max-w-md">
-            Более {preview.length} компаний-лидеров — проектировщики, инжиниринговые и подрядные организации,
+            Более {memberLogos.length} компаний-лидеров — проектировщики, инжиниринговые и подрядные организации,
             формирующие опорный каркас атомного строительства.
           </p>
         </div>
