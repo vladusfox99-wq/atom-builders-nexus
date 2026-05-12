@@ -10,6 +10,7 @@ const links = [
   { href: "#scale", label: "Масштаб" },
   { href: "/members", label: "Участники", isRoute: true },
   { href: "/clusters", label: "Кластеры", isRoute: true },
+  { href: "/projects", label: "Проекты", isRoute: true },
   { href: "/news", label: "Новости", isRoute: true },
   { href: "#contacts", label: "Контакты" },
 ];
