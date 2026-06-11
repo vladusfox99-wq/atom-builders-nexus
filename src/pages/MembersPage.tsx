@@ -11,7 +11,7 @@ const MembersPage = () => {
   const [activeCategory, setActiveCategory] = useState<string>("Все");
 
   useEffect(() => {
-    document.title = "Члены ассоциации АСКАО — более 70 компаний атомной отрасли";
+    document.title = "Члены ассоциации АСКАО — более 130 компаний атомной отрасли";
     const meta = document.querySelector('meta[name="description"]');
     if (meta) {
       meta.setAttribute(
@@ -22,15 +22,16 @@ const MembersPage = () => {
   }, []);
 
   const categories = useMemo(() => {
+    const order = ["Проектировщики", "Подрядчики", "Производители"];
     const set = new Set<string>();
-    members.forEach((m) => m.category && set.add(m.category));
-    return ["Все", ...Array.from(set).sort()];
+    members.forEach((m) => m.clusters?.forEach((c) => set.add(c)));
+    return ["Все", ...order.filter((c) => set.has(c))];
   }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return members.filter((m) => {
-      const matchesCategory = activeCategory === "Все" || m.category === activeCategory;
+      const matchesCategory = activeCategory === "Все" || m.clusters?.includes(activeCategory);
       const matchesQuery =
         !q || m.name.toLowerCase().includes(q) || m.description.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
@@ -123,12 +124,19 @@ const MembersPage = () => {
                   key={m.name}
                   className="group flex flex-col bg-navy-deep p-6 transition-all duration-500 hover:bg-navy-light"
                 >
-                  <div className="mb-6 flex h-20 items-center">
-                    <MemberLogo src={m.logo} name={m.name} className="h-20 w-32 border border-border" />
-                    {m.category && (
-                      <span className="ml-auto border border-primary/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">
-                        {m.category}
-                      </span>
+                  <div className="mb-6 flex h-20 items-center gap-3">
+                    <MemberLogo src={m.logo} name={m.name} className="h-20 w-32 shrink-0 border border-border" />
+                    {m.clusters && m.clusters.length > 0 && (
+                      <div className="ml-auto flex flex-col items-end gap-1.5">
+                        {m.clusters.map((c) => (
+                          <span
+                            key={c}
+                            className="border border-primary/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary"
+                          >
+                            {c}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
                   <h3 className="font-display text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">

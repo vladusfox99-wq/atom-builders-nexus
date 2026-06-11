@@ -1,14 +1,16 @@
 import { useState } from "react";
 
-const LEGAL_FORMS = /\b(АО|ООО|ЗАО|ПАО|ОАО|НАО|ФГУП|ФЯО|НПК|НПО|ГК|ИК|УК|ТД)\b/g;
+const LEGAL_FORMS = new Set([
+  "АО", "ООО", "ЗАО", "ПАО", "ОАО", "НАО", "СЗАО", "ФГУП", "ФЯО",
+  "НПК", "НПО", "НПП", "НПЦ", "ГК", "ИК", "УК", "ТД", "ХК", "АКБ", "СК", "ГСК",
+]);
 
 const getInitials = (name: string) => {
   const words = name
     .replace(/[«»"'()]/g, " ")
-    .replace(LEGAL_FORMS, " ")
     .trim()
     .split(/\s+/)
-    .filter(Boolean);
+    .filter((w) => w && !LEGAL_FORMS.has(w.toUpperCase()));
   const initials = words.slice(0, 2).map((w) => w[0]).join("");
   return (initials || name.slice(0, 2)).toUpperCase();
 };
@@ -24,7 +26,7 @@ const MemberLogo = ({ src, name, className = "" }: MemberLogoProps) => {
 
   return (
     <div className={`flex items-center justify-center bg-white p-3 ${className}`}>
-      {failed ? (
+      {failed || !src ? (
         <span className="select-none font-display text-xl font-bold tracking-wider text-navy-deep" aria-label={name}>
           {getInitials(name)}
         </span>
