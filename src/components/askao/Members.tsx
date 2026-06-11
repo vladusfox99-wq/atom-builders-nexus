@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { memberLogos } from "@/content/memberLogos";
+import { members } from "@/content/members";
 
 const PREVIEW_ROWS = 5;
 const PREVIEW_COLUMNS_LG = 6;
 
 const Members = () => {
-  const preview = memberLogos.slice(0, PREVIEW_ROWS * PREVIEW_COLUMNS_LG);
+  const preview = members
+    .filter((member) => member.logo)
+    .slice(0, PREVIEW_ROWS * PREVIEW_COLUMNS_LG);
 
   return (
     <section id="members" className="relative py-24 md:py-32 overflow-hidden bg-navy">
@@ -20,7 +22,7 @@ const Members = () => {
             </h2>
           </div>
           <p className="text-muted-foreground max-w-md">
-            Более {memberLogos.length} компаний-лидеров — проектировщики, инжиниринговые и подрядные организации,
+            {members.length} компаний-лидеров — проектировщики, производители и подрядные организации,
             формирующие опорный каркас атомного строительства.
           </p>
         </div>
@@ -28,14 +30,14 @@ const Members = () => {
 
       <div className="container">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-px bg-border border border-border">
-          {preview.map((logo, index) => (
+          {preview.map((member, index) => (
             <div
-              key={`${logo}-${index}`}
+              key={`${member.name}-${index}`}
               className="group relative aspect-[4/3] bg-navy-deep p-4 flex items-center justify-center overflow-hidden transition-colors hover:bg-navy-light"
             >
               <img
-                src={logo}
-                alt={`Логотип участника ${index + 1}`}
+                src={member.logo}
+                alt={member.name}
                 loading="lazy"
                 className="max-h-16 max-w-[80%] object-contain opacity-80 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105"
                 style={{ filter: "grayscale(1) brightness(0) invert(1)" }}

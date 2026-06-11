@@ -7,34 +7,37 @@ import { members } from "@/content/members";
 
 const MembersPage = () => {
   const [query, setQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState<string>("Все");
+  const [activeCluster, setActiveCluster] = useState<string>("Все");
 
   useEffect(() => {
-    document.title = "Члены ассоциации АСКАО — более 80 компаний атомной отрасли";
+    document.title = `Члены ассоциации АСКАО — ${members.length} компаний атомной отрасли`;
     const meta = document.querySelector('meta[name="description"]');
     if (meta) {
       meta.setAttribute(
         "content",
-        "Полный список членов АСКАО: проектные, инжиниринговые и подрядные организации, формирующие строительный комплекс атомной отрасли России.",
+        `${members.length} участников АСКАО: проектировщики, производители и подрядчики строительного комплекса атомной отрасли России.`,
       );
     }
   }, []);
 
-  const categories = useMemo(() => {
+  const clusters = useMemo(() => {
     const set = new Set<string>();
-    members.forEach((m) => m.category && set.add(m.category));
+    members.forEach((member) => member.clusters.forEach((cluster) => set.add(cluster)));
     return ["Все", ...Array.from(set).sort()];
   }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return members.filter((m) => {
-      const matchesCategory = activeCategory === "Все" || m.category === activeCategory;
+      const matchesCluster = activeCluster === "Все" || m.clusters.includes(activeCluster);
       const matchesQuery =
-        !q || m.name.toLowerCase().includes(q) || m.description.toLowerCase().includes(q);
-      return matchesCategory && matchesQuery;
+        !q ||
+        m.name.toLowerCase().includes(q) ||
+        m.description.toLowerCase().includes(q) ||
+        m.clusters.some((cluster) => cluster.toLowerCase().includes(q));
+      return matchesCluster && matchesQuery;
     });
-  }, [query, activeCategory]);
+  }, [query, activeCluster]);
 
   return (
     <main className="min-h-screen bg-background text-foreground font-body overflow-x-hidden">
@@ -54,19 +57,19 @@ const MembersPage = () => {
             <div className="md:col-span-8">
               <div className="section-label mb-6">Члены ассоциации</div>
               <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight">
-                {members.length}+ компаний — <br />
+                {members.length} компаний — <br />
                 <span className="text-gradient">единый строительный комплекс</span>
               </h1>
             </div>
             <div className="md:col-span-4 space-y-2 md:text-right">
               <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Источник</div>
               <a
-                href="https://xn--80aa3arm.xn--p1ai/members"
+                href="https://docs.google.com/spreadsheets/d/1oK9iZ7LUGQly_GnrzNADLmHIWDFbuWkbiRi3JDL_MDI/edit?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-primary hover:text-primary-glow break-all"
               >
-                askao.ru/members
+                Реестр кластеров АСКАО
               </a>
             </div>
           </div>
@@ -86,17 +89,17 @@ const MembersPage = () => {
             />
           </div>
           <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
+            {clusters.map((cluster) => (
               <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
+                key={cluster}
+                onClick={() => setActiveCluster(cluster)}
                 className={`px-3 py-1.5 text-xs font-semibold uppercase tracking-widest border transition-colors ${
-                  activeCategory === cat
+                  activeCluster === cluster
                     ? "border-primary bg-primary text-primary-foreground"
                     : "border-border text-muted-foreground hover:border-primary/60 hover:text-foreground"
                 }`}
               >
-                {cat}
+                {cluster}
               </button>
             ))}
           </div>
@@ -124,19 +127,35 @@ const MembersPage = () => {
                 >
                   <div className="mb-6 flex h-20 items-center">
                     <div className="flex h-20 w-32 items-center justify-center bg-background/40 p-3 border border-border">
-                      <img
-                        src={m.logo}
-                        alt={m.name}
-                        loading="lazy"
-                        className="max-h-full max-w-full object-contain opacity-80 transition-opacity duration-500 group-hover:opacity-100"
-                        style={{ filter: "brightness(0) invert(1)" }}
-                      />
+                      {m.logo ? (
+                        <img
+                          src={m.logo}
+                          alt={m.name}
+                          loading="lazy"
+                          className="max-h-full max-w-full object-contain opacity-80 transition-opacity duration-500 group-hover:opacity-100"
+                          style={{ filter: "brightness(0) invert(1)" }}
+                        />
+                      ) : (
+                        <span className="font-display text-xl font-bold text-primary">
+                          {m.name
+                            .split(/\s+/)
+                            .slice(0, 2)
+                            .map((word) => word[0])
+                            .join("")
+                            .toUpperCase()}
+                        </span>
+                      )}
                     </div>
-                    {m.category && (
-                      <span className="ml-auto border border-primary/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">
-                        {m.category}
-                      </span>
-                    )}
+                    <div className="ml-auto flex max-w-[55%] flex-wrap justify-end gap-1">
+                      {m.clusters.map((cluster) => (
+                        <span
+                          key={cluster}
+                          className="border border-primary/40 px-2 py-1 text-[9px] font-semibold uppercase tracking-wider text-primary"
+                        >
+                          {cluster}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                   <h3 className="font-display text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
                     {m.name}

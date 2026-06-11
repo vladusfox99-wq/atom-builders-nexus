@@ -1,4 +1,13 @@
+import { clusterOrganizations } from "./clusterOrganizations";
+
 export interface Member {
+  name: string;
+  logo: string;
+  description: string;
+  clusters: string[];
+}
+
+interface LegacyMember {
   name: string;
   logo: string;
   description: string;
@@ -6,7 +15,7 @@ export interface Member {
 }
 
 // Источник: https://xn--80aa3arm.xn--p1ai/members
-export const members: Member[] = [
+const legacyMembers: LegacyMember[] = [
   {
     name: "ОЦКС Росатома",
     logo: "/member-logos-traced/logotip-oczks-2ce487be11.svg",
@@ -540,3 +549,104 @@ export const members: Member[] = [
     category: "Строительство",
   },
 ];
+
+const legacyAliases: Record<string, string> = {
+  "Атомфлот ФГУП,  ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ УНИТАРНОЕ ПРЕДПРИЯТИЕ АТОМНОГО ФЛОТА":
+    "ФГУП «Атомфлот»",
+  "АИК ДПМ ООО Архитектурно-инженерная компания ДПМ, ООО": "DPM",
+  "Акрон Холдинг, АО": "AKRON HOLDING",
+  "АтомСтройЭкспорт, ООО": "АО ИК «АСЭ»",
+  "ИБХ ООО Инженерное бюро Хоссер, ООО": "ИБ «Хоссер»",
+  "НТЦД (АО Научно-технический центр Диапром), АО": "НТЦ Диапром",
+  "Объединенная Энергостроительная Корпорация, АО": "АО «ОЭК»",
+  'ОЦКС, частное учреждение Госкорпорации "Росатом" "Отраслевой центр капитального строительства"':
+    "ОЦКС Росатома",
+  "ПЕНОПЛЕКС СПб, ООО": "ПЕНОПЛЭКС СПб",
+  "Реформа Инжиниринг, ООО": "ГСК «REформа»",
+  "СТС ООО Следящие тест-системы, ООО": "СТС",
+  "Строительно-монтажное управление №1, ООО": "ООО «СМУ №1»",
+  "ФЦНИВТ СНПО Элерон, АО": "ФГУП «Элерон»",
+  "Энергопласт, ООО": "Энерготэк",
+  "ЮЭМ, ООО": "Югэлектромонтаж",
+};
+
+const legalFormTokens = new Set([
+  "ао",
+  "акб",
+  "гк",
+  "зао",
+  "ооо",
+  "пао",
+  "сзао",
+  "ск",
+  "фгуп",
+  "фяо",
+  "хк",
+]);
+
+const normalizeOrganizationName = (name: string) =>
+  (name.toLocaleLowerCase("ru-RU").replace(/ё/g, "е").match(/[a-zа-я0-9]+/g) ?? [])
+    .filter((token) => !legalFormTokens.has(token))
+    .join("");
+
+const getOrganizationTokens = (name: string) =>
+  (name.toLocaleLowerCase("ru-RU").replace(/ё/g, "е").match(/[a-zа-я0-9]+/g) ?? []).filter(
+    (token) => !legalFormTokens.has(token),
+  );
+
+const matchedLegacyMembers = new Set<LegacyMember>();
+
+const findLegacyMember = (organizationName: string) => {
+  const alias = legacyAliases[organizationName];
+  if (alias) {
+    const member = legacyMembers.find((candidate) => candidate.name === alias);
+    return member && !matchedLegacyMembers.has(member) ? member : undefined;
+  }
+
+  const normalizedOrganization = normalizeOrganizationName(organizationName);
+  const organizationTokens = getOrganizationTokens(organizationName);
+  if (normalizedOrganization.length < 3) {
+    return undefined;
+  }
+
+  return legacyMembers
+    .filter((member) => {
+      const normalizedLegacy = normalizeOrganizationName(member.name);
+      const shortNameMatches =
+        normalizedLegacy.length > 3 || organizationTokens.includes(normalizedLegacy);
+      return (
+        !matchedLegacyMembers.has(member) &&
+        normalizedLegacy.length >= 3 &&
+        shortNameMatches &&
+        (normalizedOrganization.includes(normalizedLegacy) ||
+          normalizedLegacy.includes(normalizedOrganization))
+      );
+    })
+    .sort(
+      (left, right) =>
+        normalizeOrganizationName(right.name).length - normalizeOrganizationName(left.name).length,
+    )[0];
+};
+
+const importedMembers: Member[] = clusterOrganizations.map((organization) => {
+  const legacy = findLegacyMember(organization.name);
+  if (legacy) {
+    matchedLegacyMembers.add(legacy);
+  }
+
+  return {
+    name: organization.name,
+    logo: legacy?.logo ?? "",
+    description: legacy?.description ?? organization.description,
+    clusters: organization.clusters,
+  };
+});
+
+const legacyOnlyMembers: Member[] = legacyMembers
+  .filter((member) => !matchedLegacyMembers.has(member))
+  .map(({ category: _category, ...member }) => ({
+    ...member,
+    clusters: ["Без кластера"],
+  }));
+
+export const members: Member[] = [...importedMembers, ...legacyOnlyMembers];
