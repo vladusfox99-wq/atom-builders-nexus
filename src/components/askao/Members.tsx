@@ -1,14 +1,40 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import { useState } from "react";
 import { members } from "@/content/members";
 
 const PREVIEW_ROWS = 5;
 const PREVIEW_COLUMNS_LG = 6;
 
+const HOMEPAGE_LOGO_EXCLUSIONS = new Set([
+  "ФГУП «Атомфлот»",
+  "АО «ОЭК»",
+  "ЮСКОМ",
+  "Электроцентромонтаж",
+  "Группа ПОЛИПЛАСТИК",
+  "ФЕНСМА",
+  "ЦМИ МГУ",
+  "СЗАО «Белтелекабель»",
+]);
+
 const Members = () => {
+  const [failedLogos, setFailedLogos] = useState<Set<string>>(() => new Set());
   const preview = members
-    .filter((member) => member.logo)
+    .filter(
+      (member) =>
+        member.logo &&
+        !HOMEPAGE_LOGO_EXCLUSIONS.has(member.name) &&
+        !failedLogos.has(member.name),
+    )
     .slice(0, PREVIEW_ROWS * PREVIEW_COLUMNS_LG);
+
+  const hideFailedLogo = (name: string) => {
+    setFailedLogos((current) => {
+      const next = new Set(current);
+      next.add(name);
+      return next;
+    });
+  };
 
   return (
     <section id="members" className="relative py-24 md:py-32 overflow-hidden bg-navy">
@@ -39,6 +65,7 @@ const Members = () => {
                 src={member.logo}
                 alt={member.name}
                 loading="lazy"
+                onError={() => hideFailedLogo(member.name)}
                 className="max-h-16 max-w-[80%] object-contain opacity-80 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105"
                 style={{ filter: "grayscale(1) brightness(0) invert(1)" }}
               />

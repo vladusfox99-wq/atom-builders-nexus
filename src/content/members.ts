@@ -1,4 +1,6 @@
 import { clusterOrganizations } from "./clusterOrganizations";
+import { clusterOrganizationLogos } from "./clusterOrganizationLogos";
+import { memberLogos } from "./memberLogos";
 
 export interface Member {
   name: string;
@@ -550,6 +552,11 @@ const legacyMembers: LegacyMember[] = [
   },
 ];
 
+const resolvedLegacyMembers = legacyMembers.map((member, index) => ({
+  ...member,
+  logo: memberLogos[index] ?? member.logo,
+}));
+
 const legacyAliases: Record<string, string> = {
   "Атомфлот ФГУП,  ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ УНИТАРНОЕ ПРЕДПРИЯТИЕ АТОМНОГО ФЛОТА":
     "ФГУП «Атомфлот»",
@@ -599,7 +606,7 @@ const matchedLegacyMembers = new Set<LegacyMember>();
 const findLegacyMember = (organizationName: string) => {
   const alias = legacyAliases[organizationName];
   if (alias) {
-    const member = legacyMembers.find((candidate) => candidate.name === alias);
+    const member = resolvedLegacyMembers.find((candidate) => candidate.name === alias);
     return member && !matchedLegacyMembers.has(member) ? member : undefined;
   }
 
@@ -609,7 +616,7 @@ const findLegacyMember = (organizationName: string) => {
     return undefined;
   }
 
-  return legacyMembers
+  return resolvedLegacyMembers
     .filter((member) => {
       const normalizedLegacy = normalizeOrganizationName(member.name);
       const shortNameMatches =
@@ -636,13 +643,13 @@ const importedMembers: Member[] = clusterOrganizations.map((organization) => {
 
   return {
     name: organization.name,
-    logo: legacy?.logo ?? "",
+    logo: legacy?.logo ?? clusterOrganizationLogos[organization.name] ?? "",
     description: legacy?.description ?? organization.description,
     clusters: organization.clusters,
   };
 });
 
-const legacyOnlyMembers: Member[] = legacyMembers
+const legacyOnlyMembers: Member[] = resolvedLegacyMembers
   .filter((member) => !matchedLegacyMembers.has(member))
   .map(({ category: _category, ...member }) => ({
     ...member,

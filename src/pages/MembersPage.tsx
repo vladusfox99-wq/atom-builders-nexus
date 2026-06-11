@@ -53,26 +53,11 @@ const MembersPage = () => {
             <ArrowLeft size={16} /> На главную
           </Link>
 
-          <div className="grid gap-10 md:grid-cols-12 md:items-end">
-            <div className="md:col-span-8">
-              <div className="section-label mb-6">Члены ассоциации</div>
-              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight">
-                {members.length} компаний — <br />
-                <span className="text-gradient">единый строительный комплекс</span>
-              </h1>
-            </div>
-            <div className="md:col-span-4 space-y-2 md:text-right">
-              <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Источник</div>
-              <a
-                href="https://docs.google.com/spreadsheets/d/1oK9iZ7LUGQly_GnrzNADLmHIWDFbuWkbiRi3JDL_MDI/edit?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-primary hover:text-primary-glow break-all"
-              >
-                Реестр кластеров АСКАО
-              </a>
-            </div>
-          </div>
+          <div className="section-label mb-6">Члены ассоциации</div>
+          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight">
+            {members.length} компаний — <br />
+            <span className="text-gradient">единый строительный комплекс</span>
+          </h1>
         </div>
       </section>
 
