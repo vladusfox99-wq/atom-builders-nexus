@@ -9,7 +9,7 @@ export interface Member {
 export const members: Member[] = [
   {
     name: "ОЦКС Росатома",
-    logo: "/member-logos-traced/logotip-oczks-2ce487be11.svg",
+    logo: "/member-logos/ocks.svg",
     description:
       "Функциональный центр Госкорпорации «Росатом» по контролю, регулированию и совершенствованию процессов управления и реализации инвестиционно-строительных проектов атомной отрасли.",
     category: "Управление",
@@ -23,7 +23,7 @@ export const members: Member[] = [
   },
   {
     name: "АО ИК «АСЭ»",
-    logo: "https://static3.tildacdn.com/tild6435-3137-4134-a161-323664653433/ase-logo-new2x.png",
+    logo: "/member-logos/ase.svg",
     description:
       "Инжиниринговый дивизион Росатома: сооружение АЭС в России и за рубежом, услуги EPC, EP, EPC(M), управление проектом и Multi-D технологии для сложных инженерных объектов.",
     category: "Инжиниринг",
@@ -51,7 +51,7 @@ export const members: Member[] = [
   },
   {
     name: "АО «ВНИИАЭС»",
-    logo: "https://thb.tildacdn.com/tild3261-3064-4135-b864-393533323238/-/empty/logo.png",
+    logo: "/member-logos/vniiaes.png",
     description:
       "Лидерство в научно-технической поддержке и технологических работах на всех этапах жизненного цикла АЭС.",
     category: "Наука",
@@ -79,7 +79,7 @@ export const members: Member[] = [
   },
   {
     name: "ФГУП «Атомфлот»",
-    logo: "https://thb.tildacdn.com/tild3335-3330-4261-a536-343662323565/-/empty/download.png",
+    logo: "/member-logos/atomflot.png",
     description:
       "Эксплуатация и технологическое обслуживание атомных ледоколов и судов вспомогательного флота.",
     category: "Производство",
@@ -100,7 +100,7 @@ export const members: Member[] = [
   },
   {
     name: "Корпорация АК «ЭСКМ»",
-    logo: "/member-logos-traced/tovarnyij-znak-18b0643813.svg",
+    logo: "/member-logos/eskm.png",
     description:
       "Электромонтажные работы на объектах электроэнергетического строительства. Преемник треста «Электросевкавмонтаж», основанного в 1985 году.",
     category: "Строительство",
@@ -135,14 +135,14 @@ export const members: Member[] = [
   },
   {
     name: "Группа ПОЛИПЛАСТИК",
-    logo: "https://thb.tildacdn.com/tild3038-3939-4236-b537-373164373762/-/empty/15004_gruppa-polipla.png",
+    logo: "/member-logos/polyplastic.png",
     description:
       "Крупнейшее в России и ЕАЭС производство полимерных труб, компаундов, решений для очистки воды и цифровых сервисов для строительства и ЖКХ.",
     category: "Материалы",
   },
   {
     name: "ФЕНСМА",
-    logo: "/member-logos-traced/fensma-924x216-askao-10d82c7e9b.svg",
+    logo: "/member-logos/fensma.svg",
     description:
       "Многопрофильная строительная компания, выступающая в роли генерального подрядчика, с обширным опытом строительства нулевого цикла.",
     category: "Строительство",
@@ -184,14 +184,14 @@ export const members: Member[] = [
   },
   {
     name: "ЦМИ МГУ",
-    logo: "https://thb.tildacdn.com/tild6336-6434-4466-b035-333138616463/-/empty/logotip.png",
+    logo: "/member-logos/cmi-msu.png",
     description:
       "Большой опыт инженерных исследований в арктическом, южном и дальневосточном регионах — более 180 выполненных проектов.",
     category: "Изыскания",
   },
   {
     name: "СЗАО «Белтелекабель»",
-    logo: "https://thb.tildacdn.com/tild3931-6364-4331-b264-333865333036/-/empty/logo.png",
+    logo: "/member-logos/beltelekabel.svg",
     description:
       "С 1996 года работает на рынке Республики Беларусь, является резидентом свободной экономической зоны «Минск».",
     category: "Производство",
@@ -219,7 +219,7 @@ export const members: Member[] = [
   },
   {
     name: "Бергауф Строительные технологии",
-    logo: "/member-logos-traced/bergauf-1-2e15808c31.svg",
+    logo: "/member-logos/bergauf.svg",
     description:
       "Российская компания, входящая в пятёрку лидеров России и СНГ по производству сухих строительных смесей.",
     category: "Материалы",
@@ -233,7 +233,7 @@ export const members: Member[] = [
   },
   {
     name: "НПП «Доза»",
-    logo: "https://thb.tildacdn.com/tild3464-3739-4039-b961-323938313735/-/empty/logo-doza-multicolor.png",
+    logo: "/member-logos/doza.svg",
     description:
       "С 1991 года разработка и производство приборов и систем радиационной безопасности.",
     category: "Безопасность",
@@ -254,14 +254,14 @@ export const members: Member[] = [
   },
   {
     name: "AKRON HOLDING",
-    logo: "/member-logos-traced/logotip-ax-91882539ca.svg",
+    logo: "/member-logos/akron.svg",
     description:
       "Металлургический холдинг полного цикла: заготовка и переработка лома и отходов чёрных и цветных металлов, утилизация транспортных средств и техники.",
     category: "Материалы",
   },
   {
     name: "Синатом",
-    logo: "https://static.tildacdn.com/tild6533-3863-4039-a461-643365343764/sah-logo.svg",
+    logo: "/member-logos/sinatom.svg",
     description:
       "Часть группы компаний «Синара». Генеральный проектировщик и генеральный подрядчик по промышленным и гражданским объектам.",
     category: "Инжиниринг",
@@ -282,7 +282,7 @@ export const members: Member[] = [
   },
   {
     name: "ИБ «Хоссер»",
-    logo: "/member-logos-traced/xosser-rus-6e18ae4ed8.svg",
+    logo: "/member-logos/hosser.svg",
     description:
       "Российская инжиниринговая компания в области здравоохранения с более чем 25-летним опытом проектирования и строительства медицинских объектов.",
     category: "Инжиниринг",
@@ -331,7 +331,7 @@ export const members: Member[] = [
   },
   {
     name: "PERI",
-    logo: "https://thb.tildacdn.com/tild3337-6334-4564-b366-326662646666/-/empty/peri-logo-bez-fona.png",
+    logo: "/member-logos/peri.svg",
     description:
       "Надёжный партнёр в монолитном строительстве, монтаже оборудования и обслуживании промышленных объектов с сопутствующим инжинирингом.",
     category: "Строительство",
@@ -345,7 +345,7 @@ export const members: Member[] = [
   },
   {
     name: "ПЕНОПЛЭКС СПб",
-    logo: "https://thb.tildacdn.com/tild3938-3263-4936-b930-306135663030/-/empty/logo-vert-penoplex-n.png",
+    logo: "/member-logos/penoplex.svg",
     description:
       "Один из крупнейших в Европе производителей теплоизоляции из экструзионного пенополистирола и других строительных материалов.",
     category: "Материалы",
@@ -366,21 +366,21 @@ export const members: Member[] = [
   },
   {
     name: "Новикомбанк",
-    logo: "/member-logos-traced/photo_54201918798211-fa9f81f6aa.svg",
+    logo: "/member-logos/novikombank.svg",
     description:
       "Поддерживает устойчивые связи с партнёрами и клиентами, участвует в работе ведущих общественных объединений финансовой и промышленной сфер.",
     category: "Финансы",
   },
   {
     name: "АЛГОНТ",
-    logo: "/member-logos-traced/algont-logotip-be6aab76fd.svg",
+    logo: "/member-logos/algont.png",
     description:
       "Более 30 лет — разработка, производство и внедрение интеллектуальных систем безопасности от террористических атак и киберугроз.",
     category: "Безопасность",
   },
   {
     name: "НИЦ «Строительство»",
-    logo: "/member-logos-traced/photo_2023-09-03_22--9668b84eb8.svg",
+    logo: "/member-logos/nic-stroitelstvo.png",
     description:
       "Лидирующая позиция в области строительных наук и архитектуры, реализация государственных программ и общенациональных проектов.",
     category: "Наука",
@@ -394,7 +394,7 @@ export const members: Member[] = [
   },
   {
     name: "Энерготэк",
-    logo: "/member-logos-traced/photo_2023-09-03_22--3c6008d544.svg",
+    logo: "/member-logos/energotek.svg",
     description:
       "Разработчик и производитель полимерных систем для прокладки и защиты кабельных линий — повышение надёжности ЛЭП и безопасности персонала.",
     category: "Материалы",
@@ -415,7 +415,7 @@ export const members: Member[] = [
   },
   {
     name: "ТЕХНОНИКОЛЬ",
-    logo: "/member-logos-traced/photo_2023-09-03_22--03eff4af33.svg",
+    logo: "/member-logos/technonicol.svg",
     description:
       "Ведущий международный производитель надёжных и эффективных строительных материалов и систем.",
     category: "Материалы",
@@ -499,14 +499,14 @@ export const members: Member[] = [
   },
   {
     name: "Демолишн (ГК «Арасар»)",
-    logo: "https://thb.tildacdn.com/tild3937-6333-4634-b935-623861306438/-/empty/12257532.png",
+    logo: "/member-logos/demolition.svg",
     description:
       "Промышленный демонтаж любой сложности в составе ГК «Арасар».",
     category: "Строительство",
   },
   {
     name: "Приборный завод «Тензор»",
-    logo: "/member-logos-traced/tenzor_logotip_copy_-c867732cc9.svg",
+    logo: "/member-logos/tenzor.png",
     description:
       "Один из лидеров на рынке средств и компонентов систем пожарной защиты, физической защиты, АСУ ТП.",
     category: "Безопасность",
@@ -520,7 +520,7 @@ export const members: Member[] = [
   },
   {
     name: "Парус электро",
-    logo: "https://static.tildacdn.com/tild3165-6662-4434-a362-373937393862/logo_new_parus_30_09.svg",
+    logo: "/member-logos/parus-electro.svg",
     description:
       "Российский разработчик и производитель ИБП, зарядных станций электромобилей и силовой преобразовательной техники.",
     category: "Оборудование",
