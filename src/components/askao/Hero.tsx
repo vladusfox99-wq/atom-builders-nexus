@@ -1,4 +1,5 @@
 import heroImg from "@/assets/hero-nuclear.jpg";
+import { members } from "@/content/members";
 
 const Hero = () => {
   return (
@@ -23,7 +24,7 @@ const Hero = () => {
         <div className="max-w-5xl">
           <div className="section-label mb-8 animate-fade-in">Ассоциация · с 2018 года</div>
 
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight text-foreground animate-fade-in-up">
+          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight text-foreground animate-fade-in-up">
             АСКАО — <span className="text-gradient">ядро</span> строительного комплекса <br className="hidden md:block" />
             атомной отрасли
           </h1>
@@ -34,7 +35,7 @@ const Hero = () => {
 
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
             {[
-              { v: "100+", l: "компаний" },
+              { v: `${members.length}+`, l: "компаний" },
               { v: "70%", l: "работ Росатома" },
               { v: "15+", l: "лет в отрасли" },
               { v: "10+", l: "стран присутствия" },

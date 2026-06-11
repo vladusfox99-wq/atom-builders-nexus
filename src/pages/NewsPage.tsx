@@ -33,12 +33,14 @@ const NewsPage = () => {
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-20 border-b border-border">
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="container relative">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-sm font-mono text-muted-foreground hover:text-primary transition-colors mb-10"
-          >
-            <ArrowLeft size={16} /> На главную
-          </Link>
+          <div className="mb-10">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-sm font-mono text-muted-foreground hover:text-primary transition-colors"
+            >
+              <ArrowLeft size={16} /> На главную
+            </Link>
+          </div>
 
           <div className="section-label mb-6">Новости и события</div>
           <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight max-w-4xl">

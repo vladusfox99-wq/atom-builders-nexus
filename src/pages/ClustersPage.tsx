@@ -13,7 +13,15 @@ const goals = [
   "Раннее вовлечение потенциальных исполнителей в проект, позволяющее минимизировать ошибки в проектировании и ценообразовании.",
 ];
 
-const clusters = [
+interface Cluster {
+  title: string;
+  image: string;
+  imageAlt: string;
+  description: string;
+  extra?: string;
+}
+
+const clusters: Cluster[] = [
   {
     title: "Кластер производителей",
     image: manufacturersImage,
@@ -37,7 +45,7 @@ const clusters = [
     description:
       "Специализированное добровольное структурное объединение членов АСКАО, имеющих компетенции в области выполнения инженерных изысканий и подготовки проектной документации в отношении ОИАЭ и других объектов промышленного и гражданского назначения.",
   },
-] as const;
+];
 
 const ClustersPage = () => {
   useEffect(() => {
@@ -58,12 +66,14 @@ const ClustersPage = () => {
       <section className="relative border-b border-border pb-16 pt-32 md:pb-20 md:pt-40">
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="container relative">
-          <Link
-            to="/"
-            className="mb-10 inline-flex items-center gap-2 text-sm font-mono text-muted-foreground transition-colors hover:text-primary"
-          >
-            <ArrowLeft size={16} /> На главную
-          </Link>
+          <div className="mb-10">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-sm font-mono text-muted-foreground transition-colors hover:text-primary"
+            >
+              <ArrowLeft size={16} /> На главную
+            </Link>
+          </div>
 
           <div className="section-label mb-6">Кластеры</div>
           <h1 className="max-w-4xl font-display text-5xl font-bold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">

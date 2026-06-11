@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Search } from "lucide-react";
 import Navbar from "@/components/askao/Navbar";
 import Footer from "@/components/askao/Footer";
+import MemberLogo from "@/components/askao/MemberLogo";
 import { members } from "@/content/members";
 
 const MembersPage = () => {
@@ -10,7 +11,7 @@ const MembersPage = () => {
   const [activeCategory, setActiveCategory] = useState<string>("Все");
 
   useEffect(() => {
-    document.title = "Члены ассоциации АСКАО — более 80 компаний атомной отрасли";
+    document.title = "Члены ассоциации АСКАО — более 70 компаний атомной отрасли";
     const meta = document.querySelector('meta[name="description"]');
     if (meta) {
       meta.setAttribute(
@@ -123,15 +124,7 @@ const MembersPage = () => {
                   className="group flex flex-col bg-navy-deep p-6 transition-all duration-500 hover:bg-navy-light"
                 >
                   <div className="mb-6 flex h-20 items-center">
-                    <div className="flex h-20 w-32 items-center justify-center bg-background/40 p-3 border border-border">
-                      <img
-                        src={m.logo}
-                        alt={m.name}
-                        loading="lazy"
-                        className="max-h-full max-w-full object-contain opacity-80 transition-opacity duration-500 group-hover:opacity-100"
-                        style={{ filter: "brightness(0) invert(1)" }}
-                      />
-                    </div>
+                    <MemberLogo src={m.logo} name={m.name} className="h-20 w-32 border border-border" />
                     {m.category && (
                       <span className="ml-auto border border-primary/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">
                         {m.category}
