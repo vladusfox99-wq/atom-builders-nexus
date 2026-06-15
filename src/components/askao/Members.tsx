@@ -23,6 +23,7 @@ const Members = () => {
     .filter(
       (member) =>
         member.logo &&
+        member.logo.startsWith("/") &&
         !HOMEPAGE_LOGO_EXCLUSIONS.has(member.name) &&
         !failedLogos.has(member.name),
     )
@@ -48,7 +49,7 @@ const Members = () => {
             </h2>
           </div>
           <p className="text-muted-foreground max-w-md">
-            {members.length} компаний-лидеров — проектировщики, производители и подрядные организации,
+            120+ организаций — проектировщики, производители и подрядные организации,
             формирующие опорный каркас атомного строительства.
           </p>
         </div>

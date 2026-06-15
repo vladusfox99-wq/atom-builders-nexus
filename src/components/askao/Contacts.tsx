@@ -1,6 +1,6 @@
 import { MapPin, Phone, Mail } from "lucide-react";
 
-const address = 'г. Москва, ул. Обручева, д. 30/1, стр.1, ячейка 12 "АСКАО"';
+const address = "г. Москва, ул. Обручева, д. 30/1, стр.1, 6 этаж";
 
 const contacts = [
   {

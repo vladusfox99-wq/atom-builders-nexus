@@ -5,14 +5,13 @@ import Logo from "@/components/askao/Logo";
 
 const links = [
   { href: "/about", label: "О нас", isRoute: true },
-  { href: "#activities", label: "Деятельность" },
-  { href: "#competencies", label: "Компетенции" },
-  { href: "#scale", label: "Масштаб" },
   { href: "/members", label: "Участники", isRoute: true },
+  { href: "/committees", label: "Комитеты", isRoute: true },
   { href: "/clusters", label: "Кластеры", isRoute: true },
   { href: "/projects", label: "Проекты", isRoute: true },
   { href: "/news", label: "Новости", isRoute: true },
-  { href: "#contacts", label: "Контакты" },
+  { href: "/events", label: "Календарь", isRoute: true },
+  { href: "/videos", label: "Видео", isRoute: true },
 ];
 
 const TelegramLogo = () => (
@@ -37,6 +36,8 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const sectionBase = location.pathname === "/" ? "" : "/";
+  const isActiveRoute = (href: string) =>
+    location.pathname === href || location.pathname.startsWith(`${href}/`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -55,20 +56,20 @@ const Navbar = () => {
           <Logo imageClassName="h-14" />
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className="hidden items-center gap-6 xl:flex">
           {links.map((link) =>
             link.isRoute ? (
               <Link
                 key={link.href}
                 to={link.href}
                 className={`relative group text-sm font-medium transition-colors ${
-                  location.pathname === link.href ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                  isActiveRoute(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {link.label}
                 <span
                   className={`absolute -bottom-1 left-0 h-px bg-primary transition-all duration-300 ${
-                    location.pathname === link.href ? "w-full" : "w-0 group-hover:w-full"
+                    isActiveRoute(link.href) ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 />
               </Link>
@@ -99,14 +100,14 @@ const Navbar = () => {
             </a>
           ))}
 
-          <button onClick={() => setOpen(!open)} className="p-2 text-foreground lg:hidden" aria-label="Меню">
+          <button onClick={() => setOpen(!open)} className="p-2 text-foreground xl:hidden" aria-label="Меню">
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
 
       {open && (
-        <div className="animate-fade-in border-t border-border bg-navy-deep/95 backdrop-blur-xl lg:hidden">
+        <div className="animate-fade-in border-t border-border bg-navy-deep/95 backdrop-blur-xl xl:hidden">
           <nav className="container flex flex-col gap-4 py-6">
             {links.map((link) =>
               link.isRoute ? (

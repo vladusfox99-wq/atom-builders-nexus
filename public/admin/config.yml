@@ -18,6 +18,7 @@ collections:
     label_singular: Новость
     folder: src/content/cms/news
     create: true
+    identifier_field: slug
     slug: "{{slug}}"
     extension: json
     format: json
@@ -57,3 +58,161 @@ collections:
           label: Текст
           name: text
           widget: text
+
+  - name: events
+    label: События
+    label_singular: Событие
+    folder: src/content/cms/events
+    create: true
+    identifier_field: id
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    sortable_fields:
+      - date
+      - title
+      - type
+    summary: "{{date}} — {{title}}"
+    fields:
+      - label: Slug
+        name: id
+        widget: string
+        hint: Латиница, цифры и дефисы. Например forum-atomstroy-2026.
+        pattern:
+          - "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          - Разрешены только строчные латинские буквы, цифры и дефис.
+      - label: Название
+        name: title
+        widget: string
+      - label: Дата
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+      - label: Время
+        name: time
+        widget: string
+        required: false
+        hint: Например 10:00 или 10:00–18:00. Если неизвестно, оставьте пустым.
+      - label: Тип события
+        name: type
+        widget: select
+        options:
+          - Форум
+          - Собрание
+          - Конференция
+          - Заседание
+          - Встреча
+          - Вебинар
+          - Другое
+      - label: Место
+        name: location
+        widget: string
+      - label: Формат
+        name: format
+        widget: select
+        options:
+          - Очно
+          - Онлайн
+          - Гибрид
+      - label: Описание
+        name: description
+        widget: text
+      - label: Ссылка на регистрацию
+        name: registrationUrl
+        widget: string
+        required: false
+        hint: Полный адрес, начинающийся с https://
+
+  - name: videos
+    label: Видео
+    label_singular: Видео
+    folder: src/content/cms/videos
+    create: true
+    identifier_field: id
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    sortable_fields:
+      - title
+    summary: "{{title}}"
+    fields:
+      - label: Slug
+        name: id
+        widget: string
+        hint: Латиница, цифры и дефисы. Например about-askao.
+        pattern:
+          - "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          - Разрешены только строчные латинские буквы, цифры и дефис.
+      - label: Название
+        name: title
+        widget: string
+      - label: Описание
+        name: description
+        widget: text
+      - label: Ссылка Rutube
+        name: sourceUrl
+        widget: string
+        hint: Например https://rutube.ru/video/идентификатор/
+
+  - name: committees
+    label: Комитеты
+    label_singular: Комитет
+    folder: src/content/cms/committees
+    create: true
+    identifier_field: id
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    sortable_fields:
+      - title
+      - leader
+    summary: "{{title}}"
+    fields:
+      - label: Slug
+        name: id
+        widget: string
+        hint: Латиница, цифры и дефисы. Например committee-digital.
+        pattern:
+          - "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          - Разрешены только строчные латинские буквы, цифры и дефис.
+      - label: Название
+        name: title
+        widget: string
+      - label: Руководитель
+        name: leader
+        widget: string
+        required: false
+      - label: Должность руководителя
+        name: leaderRole
+        widget: string
+        required: false
+      - label: Описание
+        name: description
+        widget: text
+      - label: Направления работы
+        name: directions
+        widget: list
+        required: false
+        field:
+          label: Направление
+          name: text
+          widget: string
+      - label: Состав комитета
+        name: members
+        widget: list
+        required: false
+        summary: "{{fields.name}} — {{fields.organization}}"
+        fields:
+          - label: ФИО
+            name: name
+            widget: string
+          - label: Организация
+            name: organization
+            widget: string
+            required: false
+          - label: Роль
+            name: role
+            widget: string
+            required: false

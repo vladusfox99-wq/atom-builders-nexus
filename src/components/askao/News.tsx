@@ -28,7 +28,7 @@ const News = () => {
 
         <div className="grid gap-px border border-border bg-border">
           {previewItems.map((item) => (
-            <Link key={item.slug} to="/news" className="group grid items-center gap-6 bg-navy-deep p-6 transition-all duration-500 hover:bg-navy-light md:grid-cols-12 md:p-8">
+            <Link key={item.slug} to={`/news/${item.slug}`} className="group grid items-center gap-6 bg-navy-deep p-6 transition-all duration-500 hover:bg-navy-light md:grid-cols-12 md:p-8">
               <div className="md:col-span-2 flex items-center gap-3">
                 <span className="border border-primary/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">{item.tag}</span>
               </div>

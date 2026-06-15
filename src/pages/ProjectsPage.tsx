@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/askao/Navbar";
 import Footer from "@/components/askao/Footer";
 import { projectGroups, projects, type ProjectGroup } from "@/content/projects";
+import { usePageSeo } from "@/lib/seo";
 
 const groupDescriptions: Record<ProjectGroup, string> = {
   "Текущие проекты":
@@ -15,16 +15,12 @@ const groupDescriptions: Record<ProjectGroup, string> = {
 };
 
 const ProjectsPage = () => {
-  useEffect(() => {
-    document.title = "Проекты АСКАО";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "Текущие, перспективные и инвестиционные проекты АСКАО по материалам презентации общего собрания.",
-      );
-    }
-  }, []);
+  usePageSeo({
+    title: "Проекты АСКАО",
+    description:
+      "Текущие, перспективные и инвестиционные проекты Ассоциации организаций строительного комплекса атомной отрасли.",
+    path: "/projects",
+  });
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-background font-body text-foreground">

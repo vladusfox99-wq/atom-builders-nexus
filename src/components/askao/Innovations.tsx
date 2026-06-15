@@ -1,4 +1,4 @@
-import bim from "@/assets/bim-tech.jpg";
+import bim from "@/assets/bim-tech.webp";
 import { Layers, Box, Workflow, Database } from "lucide-react";
 
 const tech = [

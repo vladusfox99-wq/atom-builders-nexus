@@ -1,22 +1,18 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/askao/Navbar";
 import Footer from "@/components/askao/Footer";
-import aboutHistoryImage from "@/assets/about-history.png";
-import malininPhoto from "@/assets/about-leader-malinin.png";
+import aboutHistoryImage from "@/assets/about-history.webp";
+import malininPhoto from "@/assets/about-leader-malinin.webp";
+import { usePageSeo } from "@/lib/seo";
 
 const AboutPage = () => {
-  useEffect(() => {
-    document.title = "О нас — АСКАО";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "История Ассоциации организаций строительного комплекса атомной отрасли и ключевые принципы деятельности АСКАО.",
-      );
-    }
-  }, []);
+  usePageSeo({
+    title: "О нас — АСКАО",
+    description:
+      "История Ассоциации организаций строительного комплекса атомной отрасли и ключевые принципы деятельности АСКАО.",
+    path: "/about",
+  });
 
   return (
     <main className="min-h-screen bg-background text-foreground font-body overflow-x-hidden">
@@ -60,6 +56,8 @@ const AboutPage = () => {
               <img
                 src={aboutHistoryImage}
                 alt="История Ассоциации АСКАО"
+                width={1409}
+                height={1210}
                 className="h-full w-full object-cover"
                 loading="lazy"
               />
@@ -83,7 +81,7 @@ const AboutPage = () => {
               Основные обязанности: консолидация организаций строительного комплекса атомной отрасли для реализации инвестиционной программы Госкорпорации «Росатом» по сооружению объектов использования атомной энергии в РФ и за рубежом, развитие международного сотрудничества в сфере строительства объектов использования атомной энергии, обмен профессиональным, управленческим опытом между членами Ассоциации.
             </p>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-              В настоящее время АСКАО успешно функционирует и включает в себя более 90 организаций.
+              В настоящее время АСКАО успешно функционирует и включает в себя 120+ организаций.
             </p>
           </article>
 
@@ -92,6 +90,8 @@ const AboutPage = () => {
               <img
                 src={malininPhoto}
                 alt="Малинин Сергей Михайлович"
+                width={622}
+                height={602}
                 className="h-full w-full object-cover"
                 loading="lazy"
               />

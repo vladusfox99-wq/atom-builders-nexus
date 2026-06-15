@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Navbar from "@/components/askao/Navbar";
 import Footer from "@/components/askao/Footer";
 import { newsItems } from "@/content/news";
+import { usePageSeo } from "@/lib/seo";
 
 const formatDate = (value: string) =>
   new Date(value).toLocaleDateString("ru-RU", {
@@ -13,16 +13,12 @@ const formatDate = (value: string) =>
   });
 
 const NewsPage = () => {
-  useEffect(() => {
-    document.title = "Новости АСКАО — события, форумы, инициативы отрасли";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "Новости Ассоциации организаций строительного комплекса атомной отрасли: форумы, заседания, проекты и инициативы.",
-      );
-    }
-  }, []);
+  usePageSeo({
+    title: "Новости АСКАО — события, форумы, инициативы отрасли",
+    description:
+      "Новости Ассоциации организаций строительного комплекса атомной отрасли: форумы, заседания, проекты и инициативы.",
+    path: "/news",
+  });
 
   const [featured, ...rest] = newsItems;
 
@@ -61,15 +57,18 @@ const NewsPage = () => {
                 <div className="font-mono text-sm text-muted-foreground">{formatDate(featured.date)}</div>
               </div>
               <div className="md:col-span-8">
-                <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
-                  {featured.title}
-                </h2>
+                <Link to={`/news/${featured.slug}`} className="group block">
+                  <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight transition-colors group-hover:text-primary">
+                    {featured.title}
+                  </h2>
+                </Link>
                 <p className="mt-6 text-lg text-muted-foreground leading-relaxed">{featured.excerpt}</p>
-                <div className="mt-8 space-y-4 text-base text-foreground/80 leading-relaxed">
-                  {featured.content.map((paragraph, idx) => (
-                    <p key={idx}>{paragraph}</p>
-                  ))}
-                </div>
+                <Link
+                  to={`/news/${featured.slug}`}
+                  className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary-glow"
+                >
+                  Читать далее <ArrowUpRight size={18} />
+                </Link>
               </div>
             </article>
           </div>
@@ -85,8 +84,9 @@ const NewsPage = () => {
 
           <div className="grid gap-px border border-border bg-border">
             {rest.map((item) => (
-              <article
+              <Link
                 key={item.slug}
+                to={`/news/${item.slug}`}
                 className="group grid gap-6 bg-navy-deep p-6 md:p-8 transition-all duration-500 hover:bg-navy-light md:grid-cols-12 md:items-start"
               >
                 <div className="md:col-span-2 flex flex-col gap-2">
@@ -105,7 +105,7 @@ const NewsPage = () => {
                   className="md:col-span-1 ml-auto text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-primary"
                   size={24}
                 />
-              </article>
+              </Link>
             ))}
           </div>
         </div>

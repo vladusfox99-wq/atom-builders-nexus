@@ -1,24 +1,20 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Search } from "lucide-react";
 import Navbar from "@/components/askao/Navbar";
 import Footer from "@/components/askao/Footer";
 import { members } from "@/content/members";
+import { usePageSeo } from "@/lib/seo";
 
 const MembersPage = () => {
   const [query, setQuery] = useState("");
   const [activeCluster, setActiveCluster] = useState<string>("Все");
 
-  useEffect(() => {
-    document.title = `Члены ассоциации АСКАО — ${members.length} компаний атомной отрасли`;
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        `${members.length} участников АСКАО: проектировщики, производители и подрядчики строительного комплекса атомной отрасли России.`,
-      );
-    }
-  }, []);
+  usePageSeo({
+    title: `Члены ассоциации АСКАО — ${members.length} организаций`,
+    description: `${members.length} участников АСКАО: проектировщики, производители и подрядчики строительного комплекса атомной отрасли России.`,
+    path: "/members",
+  });
 
   const clusters = useMemo(() => {
     const set = new Set<string>();
