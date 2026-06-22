@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
+  ArrowUpRight,
   BriefcaseBusiness,
   CheckCircle2,
   UserRound,
@@ -88,6 +89,16 @@ const CommitteesPage = () => {
                     <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
                       {committee.description}
                     </p>
+
+                    {committee.pagePath && (
+                      <Link
+                        to={committee.pagePath}
+                        className="mt-6 inline-flex items-center gap-2 border border-primary/40 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+                      >
+                        Открыть страницу комитета
+                        <ArrowUpRight size={16} />
+                      </Link>
+                    )}
 
                     {committee.directions.length > 0 && (
                       <div className="mt-8">

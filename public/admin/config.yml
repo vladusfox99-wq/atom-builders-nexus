@@ -191,6 +191,11 @@ collections:
       - label: Описание
         name: description
         widget: text
+      - label: Ссылка на отдельную страницу
+        name: pagePath
+        widget: string
+        required: false
+        hint: Например /committees/international-cooperation
       - label: Направления работы
         name: directions
         widget: list

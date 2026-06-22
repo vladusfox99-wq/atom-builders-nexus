@@ -12,6 +12,18 @@ describe("CMS content", () => {
     expect(Array.isArray(committees)).toBe(true);
   });
 
+  it("loads the international cooperation committee", () => {
+    expect(committees).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "international-cooperation",
+          title: "Комитет по международной политике АСКАО",
+          pagePath: "/committees/international-cooperation",
+        }),
+      ]),
+    );
+  });
+
   it("creates a valid Rutube embed URL", () => {
     expect(videos[0].embedUrl).toMatch(/^https:\/\/rutube\.ru\/play\/embed\//);
   });

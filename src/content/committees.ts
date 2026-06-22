@@ -10,6 +10,7 @@ export interface Committee {
   leader?: string;
   leaderRole?: string;
   description: string;
+  pagePath?: string;
   directions: string[];
   members: CommitteeMember[];
 }
@@ -62,6 +63,8 @@ const normalizeCommittee = (raw: CmsCommittee): Committee | null => {
         ? raw.leaderRole.trim()
         : undefined,
     description: raw.description,
+    pagePath:
+      typeof raw.pagePath === "string" && raw.pagePath.trim() ? raw.pagePath.trim() : undefined,
     directions: normalizeTextList(raw.directions),
     members,
   };
@@ -71,4 +74,3 @@ export const committees: Committee[] = Object.values(cmsCommitteeModules)
   .map((module) => normalizeCommittee((module as { default: CmsCommittee }).default))
   .filter((committee): committee is Committee => committee !== null)
   .sort((left, right) => left.title.localeCompare(right.title, "ru"));
-
