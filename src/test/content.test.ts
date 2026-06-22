@@ -24,6 +24,18 @@ describe("CMS content", () => {
     );
   });
 
+  it("adds committee events to the shared event calendar", () => {
+    expect(events).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "international-policy-innoprom-central-asia-2026",
+          committeeId: "international-cooperation",
+          source: "committee",
+        }),
+      ]),
+    );
+  });
+
   it("creates a valid Rutube embed URL", () => {
     expect(videos[0].embedUrl).toMatch(/^https:\/\/rutube\.ru\/play\/embed\//);
   });

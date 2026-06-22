@@ -33,9 +33,29 @@ const formatEventDate = (value: string) =>
     year: "numeric",
   });
 
+const getEventEndDate = (event: AssociationEvent) => event.endDate ?? event.date;
+const getEventDateLabel = (event: AssociationEvent) =>
+  event.dateLabel ??
+  (event.endDate
+    ? `${formatEventDate(event.date)} - ${formatEventDate(event.endDate)}`
+    : formatEventDate(event.date));
+
+const getEventDateKeys = (event: AssociationEvent) => {
+  const keys: string[] = [];
+  const current = toLocalDate(event.date);
+  const end = toLocalDate(getEventEndDate(event));
+
+  while (current <= end) {
+    keys.push(toDateKey(current));
+    current.setDate(current.getDate() + 1);
+  }
+
+  return keys;
+};
+
 const getInitialMonth = () => {
   const todayKey = toDateKey(new Date());
-  const nextEvent = events.find((event) => event.date >= todayKey);
+  const nextEvent = events.find((event) => getEventEndDate(event) >= todayKey);
   const initialEvent = nextEvent ?? events[events.length - 1];
   const initialDate = initialEvent ? toLocalDate(initialEvent.date) : new Date();
 
@@ -68,6 +88,15 @@ const EventCard = ({ event }: { event: AssociationEvent }) => (
       <h3 className="font-display text-xl font-semibold leading-snug transition-colors group-hover:text-primary md:text-2xl">
         {event.title}
       </h3>
+      {event.source === "committee" && event.sourcePagePath && (
+        <Link
+          to={event.sourcePagePath}
+          className="mt-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary transition-colors hover:text-primary-glow"
+        >
+          {event.committeeTitle}
+          <ArrowUpRight size={14} />
+        </Link>
+      )}
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
         {event.description}
       </p>
@@ -87,7 +116,7 @@ const EventCard = ({ event }: { event: AssociationEvent }) => (
     <div className="space-y-3 text-sm text-muted-foreground md:col-span-3">
       <div className="flex items-start gap-2">
         <CalendarDays className="mt-0.5 shrink-0 text-primary" size={16} />
-        <span>{formatEventDate(event.date)}</span>
+        <span>{getEventDateLabel(event)}</span>
       </div>
       <div className="flex items-start gap-2">
         <MapPin className="mt-0.5 shrink-0 text-primary" size={16} />
@@ -116,7 +145,9 @@ const EventsPage = () => {
   const eventsByDate = useMemo(() => {
     const grouped = new Map<string, AssociationEvent[]>();
     events.forEach((event) => {
-      grouped.set(event.date, [...(grouped.get(event.date) ?? []), event]);
+      getEventDateKeys(event).forEach((dateKey) => {
+        grouped.set(dateKey, [...(grouped.get(dateKey) ?? []), event]);
+      });
     });
     return grouped;
   }, []);
@@ -136,7 +167,9 @@ const EventsPage = () => {
   }, [visibleMonth]);
 
   const selectedEvents = selectedDate ? eventsByDate.get(selectedDate) ?? [] : events;
-  const upcomingEvents = events.filter((event) => event.date >= todayKey);
+  const upcomingEvents = events
+    .filter((event) => getEventEndDate(event) >= todayKey)
+    .sort((left, right) => left.date.localeCompare(right.date));
 
   const changeMonth = (offset: number) => {
     setVisibleMonth(
@@ -269,7 +302,7 @@ const EventsPage = () => {
                       className="block w-full border-t border-border pt-5 text-left first:border-t-0 first:pt-0"
                     >
                       <span className="font-mono text-xs text-primary">
-                        {formatEventDate(event.date)}
+                        {getEventDateLabel(event)}
                       </span>
                       <span className="mt-2 block font-display text-lg font-semibold leading-snug transition-colors hover:text-primary">
                         {event.title}

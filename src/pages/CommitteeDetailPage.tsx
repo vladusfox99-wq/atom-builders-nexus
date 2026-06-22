@@ -30,6 +30,7 @@ import { feature } from "topojson-client";
 import countriesAtlas from "world-atlas/countries-110m.json";
 import Navbar from "@/components/askao/Navbar";
 import Footer from "@/components/askao/Footer";
+import { committeeEvents } from "@/content/committeeEvents";
 import { committees } from "@/content/committees";
 import askAoLogo from "@/assets/askao-logo.png";
 import committeeHeroImage from "@/assets/international-committee-hero.png";
@@ -176,59 +177,6 @@ const projects = [
     description: "Сопровождение коммуникаций, аналитики и проектных материалов.",
     startDate: "уточняется",
     endDate: "уточняется",
-  },
-];
-
-const events = [
-  {
-    title: "АТОМЭКСПО",
-    date: "сентябрь 2026",
-    city: "Москва",
-    country: "Россия",
-    type: "Форум",
-    status: "planned",
-    description: "Участие Комитета в международной деловой программе и партнерских встречах.",
-    results: "Итоги будут добавлены после мероприятия.",
-  },
-  {
-    title: "INNOPROM Central Asia",
-    date: "20-22 апреля 2026",
-    city: "Ташкент",
-    country: "Узбекистан",
-    type: "Выставка",
-    status: "past",
-    description: "Проработка деловой миссии и встреч с профильными организациями.",
-    results: "Итоги будут добавлены после мероприятия.",
-  },
-  {
-    title: "NPPES Turkey",
-    date: "30 июня - 1 июля 2026",
-    city: "Стамбул",
-    country: "Турция",
-    type: "Конференция",
-    status: "planned",
-    description: "Международная площадка для обмена опытом по атомной энергетике.",
-    results: "Итоги и материалы уточняются.",
-  },
-  {
-    title: "Форумы БРИКС",
-    date: "12-13 сентября 2026",
-    city: "Нью-Дели",
-    country: "Индия",
-    type: "Форум",
-    status: "planned",
-    description: "Площадка для продвижения кооперации и экспертных контактов.",
-    results: "Итоги будут добавлены после мероприятия.",
-  },
-  {
-    title: "Форумы ШОС",
-    date: "23 мая 2025",
-    city: "уточняется",
-    country: "уточняется",
-    type: "Форум",
-    status: "past",
-    description: "Подготовка международной повестки и партнерских встреч.",
-    results: "Итоги будут добавлены после мероприятия.",
   },
 ];
 
@@ -389,6 +337,7 @@ const CommitteeDetailPage = () => {
     galleryFilter === "все"
       ? galleryItems
       : galleryItems.filter((item) => item.category === galleryFilter);
+  const pageEvents = committeeEvents.filter((event) => event.committeeId === committeeId);
   const globeProjection = geoOrthographic()
     .rotate([-55, -35])
     .scale(285)
@@ -716,14 +665,14 @@ const CommitteeDetailPage = () => {
               <div key={group.status}>
                 <h3 className="font-display text-2xl font-semibold">{group.title}</h3>
                 <div className="mt-5 grid gap-4">
-                  {events
+                  {pageEvents
                     .filter((event) => event.status === group.status)
                     .map((event) => (
                       <article key={event.title} className="border border-border bg-background/55 p-5">
                         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
                           <span>{event.type}</span>
                           <span>/</span>
-                          <span>{event.date}</span>
+                          <span>{event.dateLabel ?? event.date}</span>
                         </div>
                         <h4 className="mt-3 font-display text-xl font-semibold">{event.title}</h4>
                         <div className="mt-2 text-sm text-muted-foreground">
