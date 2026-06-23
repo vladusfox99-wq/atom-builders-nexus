@@ -15,6 +15,7 @@ const ProjectsPage = lazy(() => import("./pages/ProjectsPage.tsx"));
 const EventsPage = lazy(() => import("./pages/EventsPage.tsx"));
 const CommitteesPage = lazy(() => import("./pages/CommitteesPage.tsx"));
 const CommitteeDetailPage = lazy(() => import("./pages/CommitteeDetailPage.tsx"));
+const DigitalCommitteeDetailPage = lazy(() => import("./pages/DigitalCommitteeDetailPage.tsx"));
 const VideosPage = lazy(() => import("./pages/VideosPage.tsx"));
 const AdminRedirectPage = lazy(() => import("./pages/AdminRedirectPage.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
@@ -52,6 +53,7 @@ const App = () => (
             <Route path="/clusters" element={<ClustersPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/committees" element={<CommitteesPage />} />
+            <Route path="/committees/digital-ai" element={<DigitalCommitteeDetailPage />} />
             <Route path="/committees/:committeeId" element={<CommitteeDetailPage />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/videos" element={<VideosPage />} />
