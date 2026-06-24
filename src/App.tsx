@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 const Index = lazy(() => import("./pages/Index.tsx"));
+const BusinessCardPage = lazy(() => import("./pages/BusinessCardPage.tsx"));
 const AboutPage = lazy(() => import("./pages/AboutPage.tsx"));
 const NewsPage = lazy(() => import("./pages/NewsPage.tsx"));
 const NewsDetailPage = lazy(() => import("./pages/NewsDetailPage.tsx"));
@@ -45,6 +46,7 @@ const App = () => (
         <Suspense fallback={<RouteLoader />}>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/frolov" element={<BusinessCardPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/news/:slug" element={<NewsDetailPage />} />

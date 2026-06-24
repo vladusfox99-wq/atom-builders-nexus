@@ -16,6 +16,13 @@ const staticPages = [
       "АСКАО объединяет 120+ организаций строительного комплекса атомной отрасли России для реализации крупнейших инфраструктурных проектов.",
   },
   {
+    path: "/frolov",
+    title: "Фролов Александр Викторович — визитка",
+    description:
+      "Фролов Александр Викторович, Советник Генерального Директора. Телефон, email, Telegram и MAX.",
+    image: `${siteUrl}/frolov-aleksandr-viktorovich.jpg`,
+  },
+  {
     path: "/about",
     title: "Об ассоциации — АСКАО",
     description:
@@ -116,6 +123,7 @@ if (writeRouteShells) {
   for (const page of pages.filter((item) => item.path !== "/")) {
     const canonical = `${siteUrl}${page.path}`;
     const type = page.type ?? "website";
+    const image = page.image ?? `${siteUrl}/og-image.webp`;
     const publishedMeta = page.date
       ? `\n    <meta property="article:published_time" content="${escapeHtml(`${page.date}T00:00:00+03:00`)}" />`
       : "";
@@ -128,7 +136,7 @@ if (writeRouteShells) {
       url: canonical,
       mainEntityOfPage: canonical,
       datePublished: page.date ? `${page.date}T00:00:00+03:00` : undefined,
-      image: `${siteUrl}/og-image.webp`,
+      image,
       inLanguage: "ru-RU",
       publisher:
         type === "article"
@@ -172,12 +180,20 @@ if (writeRouteShells) {
         `<meta property="og:url" content="${escapeHtml(canonical)}" />`,
       )
       .replace(
+        /<meta property="og:image" content=".*?" \/>/s,
+        `<meta property="og:image" content="${escapeHtml(image)}" />`,
+      )
+      .replace(
         /<meta name="twitter:title" content=".*?" \/>/s,
         `<meta name="twitter:title" content="${escapeHtml(page.title)}" />`,
       )
       .replace(
         /<meta name="twitter:description" content=".*?" \/>/s,
         `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
+      )
+      .replace(
+        /<meta name="twitter:image" content=".*?" \/>/s,
+        `<meta name="twitter:image" content="${escapeHtml(image)}" />`,
       )
       .replace(
         /<script type="application\/ld\+json" data-seo-structured-data="true">.*?<\/script>/s,
