@@ -9,7 +9,7 @@ const email = "avfrolov@accni.ru";
 const phone = "+79031368183";
 const formattedPhone = "+7 903 136-81-83";
 const telegramUrl = "https://t.me/+79031368183";
-const maxUrl = "https://max.ru/join/GsaOLIijRQrcm_CwFQ9Xq_A6x0UXeBkxHP6WhGaTQKI";
+const maxUrl = "https://max.ru/u/f9LHodD0cOKmEjWiSS845-4L-N5kfk4wRPPy3sCAwkAnRDwGZ97qVbPf1gg";
 const cardPath = "/frolov";
 
 const personStructuredData = {
