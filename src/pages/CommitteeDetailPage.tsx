@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type PointerEvent } from "react";
 import { Link, useParams } from "react-router-dom";
 import { geoGraticule, geoOrthographic, geoPath } from "d3-geo";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
@@ -40,12 +40,21 @@ const committeePageTitle = "Комитет по международной по�
 const regulationUrl =
   "https://docs.google.com/document/d/1sBybhVRHLpz_UmhCv92-ReXFuu7dqgpEvOmGteNoInk/edit?tab=t.0#heading=h.ya2bws3nuyp";
 
-const heroLogos = ["ШОСПИ", "БРИКС", "ШОС"];
+const hiddenCommitteeEventIds = new Set([
+  "international-policy-brics-forums-2026",
+  "international-policy-sco-forums-2025",
+]);
 
 const missionItems = [
   "Формировать международную повестку АСКАО и представлять компетенции участников ассоциации на внешних рынках.",
   "Развивать устойчивые партнерские связи с отраслевыми объединениями, государственными структурами и деловыми площадками.",
-  "Поддерживать международные проекты, мероприятия и экспертную аналитику в интересах строительного комплекса атомной отрасли.",
+  "Комитет работает как экспертная и коммуникационная площадка внутри АСКАО, связывая запросы участников ассоциации с международными направлениями, партнерами, мероприятиями и проектными возможностями.",
+];
+
+const missionLabels = [
+  "Миссия",
+  "Основные направления деятельности",
+  "Роль Комитета в структуре АСКАО",
 ];
 
 const goals = [
@@ -98,10 +107,28 @@ const activityCards = [
 
 const committeeMembers = [
   {
-    name: "Иванов Иван Иванович",
+    name: "Элиович Артем",
     role: "Председатель Комитета",
     organization: "АСКАО",
-    bio: "Краткая информация, биография и контактные данные уточняются.",
+    bio: "Координация работы Комитета и международной повестки.",
+  },
+  {
+    name: "Хасаншин Андрей",
+    role: "Заместитель председателя Комитета",
+    organization: "АСКАО",
+    bio: "Сопровождение рабочих направлений и взаимодействия участников.",
+  },
+  {
+    name: "Белосельский Андрей",
+    role: "Советник по международно-правовым вопросам",
+    organization: "АСКАО",
+    bio: "Правовая экспертиза международных инициатив и документов.",
+  },
+  {
+    name: "Члены экспертного совета",
+    role: "Организации членов АСКАО",
+    organization: "Состав уточняется",
+    bio: "Названия организаций членов АСКАО будут добавлены после утверждения состава.",
   },
 ];
 
@@ -327,19 +354,54 @@ const galleryItems = [
 
 const galleryFilters = ["все", "мероприятия", "подписания соглашений", "деловые миссии", "проекты"];
 
+type GlobeDragStart = {
+  x: number;
+  y: number;
+  rotation: [number, number];
+};
+
 const CommitteeDetailPage = () => {
   const { committeeId } = useParams();
   const committee = committees.find((item) => item.id === committeeId);
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
   const [galleryFilter, setGalleryFilter] = useState("все");
+  const [globeRotation, setGlobeRotation] = useState<[number, number]>([-55, -35]);
+  const [globeDragStart, setGlobeDragStart] = useState<GlobeDragStart | null>(null);
 
   const filteredGallery =
     galleryFilter === "все"
       ? galleryItems
       : galleryItems.filter((item) => item.category === galleryFilter);
-  const pageEvents = committeeEvents.filter((event) => event.committeeId === committeeId);
+  const pageEvents = committeeEvents.filter(
+    (event) => event.committeeId === committeeId && !hiddenCommitteeEventIds.has(event.id),
+  );
+  const handleGlobePointerDown = (event: PointerEvent<SVGSVGElement>) => {
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setGlobeDragStart({
+      x: event.clientX,
+      y: event.clientY,
+      rotation: globeRotation,
+    });
+  };
+  const handleGlobePointerMove = (event: PointerEvent<SVGSVGElement>) => {
+    if (!globeDragStart) return;
+
+    const nextLongitude = globeDragStart.rotation[0] + (event.clientX - globeDragStart.x) * 0.35;
+    const nextLatitude = Math.max(
+      -85,
+      Math.min(85, globeDragStart.rotation[1] - (event.clientY - globeDragStart.y) * 0.25),
+    );
+
+    setGlobeRotation([nextLongitude, nextLatitude]);
+  };
+  const handleGlobePointerEnd = (event: PointerEvent<SVGSVGElement>) => {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    setGlobeDragStart(null);
+  };
   const globeProjection = geoOrthographic()
-    .rotate([-55, -35])
+    .rotate(globeRotation)
     .scale(285)
     .translate([300, 300])
     .clipAngle(90);
@@ -427,16 +489,6 @@ const CommitteeDetailPage = () => {
             участвовать в международных мероприятиях.
           </p>
 
-          <div className="mt-10 flex flex-wrap gap-3">
-            {heroLogos.map((item) => (
-              <div
-                key={item}
-                className="border border-border bg-background/70 px-5 py-3 font-display text-sm font-semibold backdrop-blur"
-              >
-                {item}
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -469,21 +521,12 @@ const CommitteeDetailPage = () => {
             <div className="grid gap-px border border-border bg-border md:grid-cols-3">
               {missionItems.map((item, index) => (
                 <article key={item} className="bg-navy-deep p-6">
-                  <div className="font-mono text-xs text-primary">
-                    / {(index + 1).toString().padStart(2, "0")}
+                  <div className="font-mono text-xs font-semibold uppercase leading-snug text-primary">
+                    {missionLabels[index]}
                   </div>
                   <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{item}</p>
                 </article>
               ))}
-            </div>
-
-            <div className="border-l-2 border-primary pl-5">
-              <h3 className="font-display text-xl font-semibold">Роль в структуре АСКАО</h3>
-              <p className="mt-3 leading-relaxed text-muted-foreground">
-                Комитет работает как экспертная и коммуникационная площадка внутри АСКАО,
-                связывая запросы участников ассоциации с международными направлениями, партнерами,
-                мероприятиями и проектными возможностями.
-              </p>
             </div>
           </div>
         </div>
@@ -707,12 +750,17 @@ const CommitteeDetailPage = () => {
           </div>
           <div className="lg:col-span-8">
             <div className="grid gap-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(280px,0.75fr)]">
-              <div className="border border-border bg-navy-deep p-4 md:p-6">
+              <div className="flex min-h-[560px] items-center justify-center bg-navy-deep p-2 md:p-4">
                 <svg
                   viewBox="0 0 600 600"
                   role="img"
                   aria-label="Глобус с реальными странами сотрудничества"
-                  className="mx-auto aspect-square max-w-[620px] overflow-visible"
+                  className="aspect-square w-full max-w-[620px] touch-none select-none overflow-visible cursor-grab active:cursor-grabbing"
+                  onPointerDown={handleGlobePointerDown}
+                  onPointerMove={handleGlobePointerMove}
+                  onPointerUp={handleGlobePointerEnd}
+                  onPointerCancel={handleGlobePointerEnd}
+                  onPointerLeave={handleGlobePointerEnd}
                 >
                   <defs>
                     <radialGradient id="globe-ocean" cx="35%" cy="28%" r="72%">
@@ -733,9 +781,6 @@ const CommitteeDetailPage = () => {
                     <path
                       d={globeSpherePath}
                       fill="url(#globe-ocean)"
-                      stroke="hsl(var(--primary))"
-                      strokeOpacity="0.45"
-                      strokeWidth="1.5"
                       filter="url(#globe-glow)"
                     />
                   )}
