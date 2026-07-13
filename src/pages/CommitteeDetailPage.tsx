@@ -811,7 +811,11 @@ const CommitteeDetailPage = () => {
                           role={isCooperationCountry ? "button" : undefined}
                           tabIndex={isCooperationCountry ? 0 : undefined}
                           aria-label={cooperationCountry?.name}
-                          onClick={() => {
+                          onPointerDown={(event) => {
+                            if (cooperationCountry) event.stopPropagation();
+                          }}
+                          onClick={(event) => {
+                            event.stopPropagation();
                             if (cooperationCountry) setSelectedCountry(cooperationCountry);
                           }}
                           onKeyDown={(event) => {
@@ -820,6 +824,7 @@ const CommitteeDetailPage = () => {
                               (event.key === "Enter" || event.key === " ")
                             ) {
                               event.preventDefault();
+                              event.stopPropagation();
                               setSelectedCountry(cooperationCountry);
                             }
                           }}
@@ -832,7 +837,11 @@ const CommitteeDetailPage = () => {
                           }
                           strokeOpacity={isSelected ? 0.95 : isCooperationCountry ? 0.7 : 0.65}
                           strokeWidth={isSelected ? 1.35 : isCooperationCountry ? 0.9 : 0.45}
-                          className={isCooperationCountry ? "cursor-pointer transition-opacity hover:opacity-90" : ""}
+                          className={
+                            isCooperationCountry
+                              ? "cursor-pointer outline-none transition-opacity hover:opacity-90"
+                              : "outline-none"
+                          }
                         />
                       );
                     })}
@@ -855,14 +864,19 @@ const CommitteeDetailPage = () => {
                           tabIndex={0}
                           aria-pressed={isSelected}
                           aria-label={country.name}
-                          onClick={() => setSelectedCountry(country)}
+                          onPointerDown={(event) => event.stopPropagation()}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setSelectedCountry(country);
+                          }}
                           onKeyDown={(event) => {
                             if (event.key === "Enter" || event.key === " ") {
                               event.preventDefault();
+                              event.stopPropagation();
                               setSelectedCountry(country);
                             }
                           }}
-                          className="cursor-pointer"
+                          className="cursor-pointer outline-none"
                         >
                           <circle
                             cx={x}
@@ -904,22 +918,6 @@ const CommitteeDetailPage = () => {
                   </g>
                 </svg>
 
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {countries.map((country) => (
-                    <button
-                      key={country.name}
-                      type="button"
-                      onClick={() => setSelectedCountry(country)}
-                      className={`border px-3 py-2 text-sm font-semibold transition-colors ${
-                        selectedCountry.name === country.name
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-border text-muted-foreground hover:border-primary hover:text-primary"
-                      }`}
-                    >
-                      {country.name}
-                    </button>
-                  ))}
-                </div>
               </div>
 
               <aside className="border border-border bg-navy-deep p-6">
