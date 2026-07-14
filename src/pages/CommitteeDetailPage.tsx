@@ -1,6 +1,6 @@
 import { useState, type PointerEvent } from "react";
 import { Link, useParams } from "react-router-dom";
-import { geoGraticule, geoOrthographic, geoPath } from "d3-geo";
+import { geoDistance, geoGraticule, geoOrthographic, geoPath } from "d3-geo";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
 import {
   ArrowLeft,
@@ -26,7 +26,7 @@ import {
   ShieldCheck,
   UsersRound,
 } from "lucide-react";
-import { feature } from "topojson-client";
+import { feature, mesh } from "topojson-client";
 import countriesAtlas from "world-atlas/countries-110m.json";
 import Navbar from "@/components/askao/Navbar";
 import Footer from "@/components/askao/Footer";
@@ -269,6 +269,26 @@ const countries = [
     latitude: 22,
   },
   {
+    name: "Индонезия (Бали)",
+    countryId: "360",
+    agreements: 0,
+    projects: 1,
+    events: 0,
+    partners: 1,
+    longitude: 115,
+    latitude: -8,
+  },
+  {
+    name: "Вьетнам",
+    countryId: "704",
+    agreements: 0,
+    projects: 1,
+    events: 0,
+    partners: 1,
+    longitude: 108,
+    latitude: 16,
+  },
+  {
     name: "Китай",
     countryId: "156",
     agreements: 1,
@@ -289,6 +309,16 @@ const countries = [
     latitude: 39,
   },
   {
+    name: "ОАЭ",
+    countryId: "784",
+    agreements: 0,
+    projects: 1,
+    events: 0,
+    partners: 1,
+    longitude: 54,
+    latitude: 24,
+  },
+  {
     name: "Республика Гана",
     countryId: "288",
     agreements: 0,
@@ -297,6 +327,16 @@ const countries = [
     partners: 1,
     longitude: -1,
     latitude: 8,
+  },
+  {
+    name: "Гвинея",
+    countryId: "324",
+    agreements: 0,
+    projects: 1,
+    events: 0,
+    partners: 1,
+    longitude: -10,
+    latitude: 10,
   },
   {
     name: "Другие страны",
@@ -324,9 +364,13 @@ const countryLabelOffsets: Record<string, { dx: number; dy: number; anchor: "sta
   "Узбекистан": { dx: -14, dy: 24, anchor: "end" },
   "Таджикистан": { dx: 14, dy: 30, anchor: "start" },
   "Индия": { dx: 14, dy: 12, anchor: "start" },
+  "Индонезия (Бали)": { dx: -14, dy: 12, anchor: "end" },
+  "Вьетнам": { dx: -14, dy: 28, anchor: "end" },
   "Китай": { dx: 14, dy: -10, anchor: "start" },
   "Турция": { dx: -14, dy: 16, anchor: "end" },
-  "Республика Гана": { dx: -14, dy: 12, anchor: "end" },
+  "ОАЭ": { dx: -14, dy: 8, anchor: "end" },
+  "Республика Гана": { dx: 14, dy: 12, anchor: "start" },
+  "Гвинея": { dx: 14, dy: 12, anchor: "start" },
   "Другие страны": { dx: -14, dy: -12, anchor: "end" },
 };
 
@@ -334,14 +378,79 @@ type WorldCountryFeature = Feature<Geometry, { name?: string }> & {
   id?: string | number;
 };
 
+const russianNewTerritoryFeatures: Feature<Geometry, { name: string }>[] = [
+  {
+    type: "Feature",
+    properties: { name: "ЛНР" },
+    geometry: {
+      type: "LineString",
+      coordinates: [
+        [38.0, 47.7],
+        [40.3, 47.7],
+        [40.3, 49.4],
+        [38.0, 49.4],
+        [38.0, 47.7],
+      ],
+    },
+  },
+  {
+    type: "Feature",
+    properties: { name: "ДНР" },
+    geometry: {
+      type: "LineString",
+      coordinates: [
+        [36.7, 46.6],
+        [39.5, 46.6],
+        [39.5, 48.3],
+        [36.7, 48.3],
+        [36.7, 46.6],
+      ],
+    },
+  },
+  {
+    type: "Feature",
+    properties: { name: "Запорожская область" },
+    geometry: {
+      type: "LineString",
+      coordinates: [
+        [34.3, 46.0],
+        [37.8, 46.0],
+        [37.8, 47.7],
+        [34.3, 47.7],
+        [34.3, 46.0],
+      ],
+    },
+  },
+  {
+    type: "Feature",
+    properties: { name: "Херсонская область" },
+    geometry: {
+      type: "LineString",
+      coordinates: [
+        [31.2, 45.3],
+        [34.9, 45.3],
+        [34.9, 47.3],
+        [31.2, 47.3],
+        [31.2, 45.3],
+      ],
+    },
+  },
+];
+
 const worldCountryCollection = feature(
   countriesAtlas,
   countriesAtlas.objects.countries,
 ) as FeatureCollection<Geometry, { name?: string }>;
+const worldCountryBorders = mesh(
+  countriesAtlas,
+  countriesAtlas.objects.countries,
+) as Geometry;
 
 const worldCountryFeatures = worldCountryCollection.features as WorldCountryFeature[];
 const cooperationCountryIds = new Set(countries.map((country) => country.countryId).filter(Boolean));
-const countryById = new Map(countries.map((country) => [country.countryId, country]));
+const countryById = new Map(
+  countries.filter((country) => country.countryId).map((country) => [country.countryId, country]),
+);
 
 const galleryItems = [
   { title: "АТОМЭКСПО", category: "мероприятия", image: "Форум" },
@@ -354,6 +463,10 @@ const galleryItems = [
 
 const galleryFilters = ["все", "мероприятия", "подписания соглашений", "деловые миссии", "проекты"];
 
+const globeCenter: [number, number] = [52, 25];
+const globeInitialRotation: [number, number] = [-globeCenter[0], -globeCenter[1]];
+const globeScale = 260;
+
 type GlobeDragStart = {
   x: number;
   y: number;
@@ -365,7 +478,7 @@ const CommitteeDetailPage = () => {
   const committee = committees.find((item) => item.id === committeeId);
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
   const [galleryFilter, setGalleryFilter] = useState("все");
-  const [globeRotation, setGlobeRotation] = useState<[number, number]>([-55, -35]);
+  const [globeRotation, setGlobeRotation] = useState<[number, number]>(globeInitialRotation);
   const [globeDragStart, setGlobeDragStart] = useState<GlobeDragStart | null>(null);
 
   const filteredGallery =
@@ -400,16 +513,34 @@ const CommitteeDetailPage = () => {
     }
     setGlobeDragStart(null);
   };
+  const selectCountry = (country: (typeof countries)[number]) => {
+    setSelectedCountry(country);
+    setGlobeRotation([
+      -country.longitude,
+      -Math.max(-65, Math.min(65, country.latitude)),
+    ]);
+  };
+  const visibleCenter: [number, number] = [-globeRotation[0], -globeRotation[1]];
   const globeProjection = geoOrthographic()
     .rotate(globeRotation)
-    .scale(285)
+    .scale(globeScale)
     .translate([300, 300])
     .clipAngle(90);
   const globePath = geoPath(globeProjection);
   const globeSpherePath = globePath({ type: "Sphere" });
   const globeGraticulePath = globePath(geoGraticule().step([20, 20])());
+  const globeCountryBordersPath = globePath(worldCountryBorders);
+  const russiaCountry = countryById.get("643");
+  const isRussiaSelected = selectedCountry.countryId === "643";
+  const russianNewTerritoryPaths = russianNewTerritoryFeatures
+    .map((territory) => ({
+      name: territory.properties.name,
+      pathData: globePath(territory),
+    }))
+    .filter((territory) => territory.pathData);
   const projectedCountries = countries
     .filter((country) => country.countryId)
+    .filter((country) => geoDistance([country.longitude, country.latitude], visibleCenter) <= Math.PI / 2)
     .map((country) => ({
       ...country,
       point: globeProjection([country.longitude, country.latitude]),
@@ -755,7 +886,7 @@ const CommitteeDetailPage = () => {
                   viewBox="0 0 600 600"
                   role="img"
                   aria-label="Глобус с реальными странами сотрудничества"
-                  className="aspect-square w-full max-w-[620px] touch-none select-none overflow-visible cursor-grab active:cursor-grabbing"
+                  className="aspect-square w-full max-w-[620px] touch-none select-none overflow-hidden outline-none cursor-grab active:cursor-grabbing focus:outline-none"
                   onPointerDown={handleGlobePointerDown}
                   onPointerMove={handleGlobePointerMove}
                   onPointerUp={handleGlobePointerEnd}
@@ -781,6 +912,9 @@ const CommitteeDetailPage = () => {
                     <path
                       d={globeSpherePath}
                       fill="url(#globe-ocean)"
+                      stroke="hsl(var(--primary))"
+                      strokeOpacity="0.65"
+                      strokeWidth="1.4"
                       filter="url(#globe-glow)"
                     />
                   )}
@@ -816,7 +950,7 @@ const CommitteeDetailPage = () => {
                           }}
                           onClick={(event) => {
                             event.stopPropagation();
-                            if (cooperationCountry) setSelectedCountry(cooperationCountry);
+                            if (cooperationCountry) selectCountry(cooperationCountry);
                           }}
                           onKeyDown={(event) => {
                             if (
@@ -825,18 +959,18 @@ const CommitteeDetailPage = () => {
                             ) {
                               event.preventDefault();
                               event.stopPropagation();
-                              setSelectedCountry(cooperationCountry);
+                              selectCountry(cooperationCountry);
                             }
                           }}
-                          fill="hsl(var(--secondary))"
-                          fillOpacity={isSelected ? 0.82 : isCooperationCountry ? 0.5 : 0.72}
-                          stroke={
+                          fill={
                             isSelected || isCooperationCountry
                               ? "hsl(var(--primary))"
-                              : "hsl(var(--background))"
+                              : "hsl(var(--secondary))"
                           }
-                          strokeOpacity={isSelected ? 0.95 : isCooperationCountry ? 0.7 : 0.65}
-                          strokeWidth={isSelected ? 1.35 : isCooperationCountry ? 0.9 : 0.45}
+                          fillOpacity={isSelected ? 0.36 : isCooperationCountry ? 0.24 : 0.22}
+                          stroke="hsl(var(--primary))"
+                          strokeOpacity={isSelected ? 0.95 : isCooperationCountry ? 0.72 : 0.34}
+                          strokeWidth={isSelected ? 1.35 : isCooperationCountry ? 0.9 : 0.55}
                           className={
                             isCooperationCountry
                               ? "cursor-pointer outline-none transition-opacity hover:opacity-90"
@@ -847,15 +981,62 @@ const CommitteeDetailPage = () => {
                     })}
                   </g>
 
+                  {globeCountryBordersPath && (
+                    <path
+                      d={globeCountryBordersPath}
+                      fill="none"
+                      stroke="hsl(var(--primary))"
+                      strokeOpacity="0.72"
+                      strokeWidth="0.75"
+                      pointerEvents="none"
+                    />
+                  )}
+
+                  <g>
+                    {russianNewTerritoryPaths.map((territory) => (
+                      <path
+                        key={territory.name}
+                        d={territory.pathData ?? undefined}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Россия: ${territory.name}`}
+                        onPointerDown={(event) => event.stopPropagation()}
+                        onClick={() => {
+                          if (russiaCountry) selectCountry(russiaCountry);
+                        }}
+                        onKeyDown={(event) => {
+                          if (
+                            russiaCountry &&
+                            (event.key === "Enter" || event.key === " ")
+                          ) {
+                            event.preventDefault();
+                            selectCountry(russiaCountry);
+                          }
+                        }}
+                        fill="none"
+                        stroke="hsl(var(--primary))"
+                        strokeOpacity={isRussiaSelected ? 0.95 : 0.7}
+                        strokeWidth={isRussiaSelected ? 1.35 : 0.9}
+                        className="cursor-pointer transition-opacity hover:opacity-90"
+                      />
+                    ))}
+                  </g>
+
                   <g>
                     {projectedCountries.map((country) => {
                       const [x, y] = country.point;
                       const isSelected = selectedCountry.name === country.name;
-                      const offset = country.labelOffset ?? {
+                      const baseOffset = country.labelOffset ?? {
                         dx: 14,
                         dy: -8,
                         anchor: "start" as const,
                       };
+                      const offset =
+                        x > 500
+                          ? { ...baseOffset, dx: -14, anchor: "end" as const }
+                          : x < 100
+                            ? { ...baseOffset, dx: 14, anchor: "start" as const }
+                            : baseOffset;
 
                       return (
                         <g
@@ -867,13 +1048,13 @@ const CommitteeDetailPage = () => {
                           onPointerDown={(event) => event.stopPropagation()}
                           onClick={(event) => {
                             event.stopPropagation();
-                            setSelectedCountry(country);
+                            selectCountry(country);
                           }}
                           onKeyDown={(event) => {
                             if (event.key === "Enter" || event.key === " ") {
                               event.preventDefault();
                               event.stopPropagation();
-                              setSelectedCountry(country);
+                              selectCountry(country);
                             }
                           }}
                           className="cursor-pointer outline-none"
