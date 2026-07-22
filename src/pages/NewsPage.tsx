@@ -21,6 +21,7 @@ const NewsPage = () => {
   });
 
   const [featured, ...rest] = newsItems;
+  const featuredImage = featured?.images[0];
 
   return (
     <main className="min-h-screen bg-background text-foreground font-body overflow-x-hidden">
@@ -63,6 +64,16 @@ const NewsPage = () => {
                   </h2>
                 </Link>
                 <p className="mt-6 text-lg text-muted-foreground leading-relaxed">{featured.excerpt}</p>
+                {featuredImage && (
+                  <Link to={`/news/${featured.slug}`} className="group mt-8 block overflow-hidden border border-border bg-navy-deep">
+                    <img
+                      src={featuredImage.src}
+                      alt={featuredImage.alt}
+                      className="aspect-[16/9] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="eager"
+                    />
+                  </Link>
+                )}
                 <Link
                   to={`/news/${featured.slug}`}
                   className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary-glow"
@@ -83,30 +94,44 @@ const NewsPage = () => {
           </div>
 
           <div className="grid gap-px border border-border bg-border">
-            {rest.map((item) => (
-              <Link
-                key={item.slug}
-                to={`/news/${item.slug}`}
-                className="group grid gap-6 bg-navy-deep p-6 md:p-8 transition-all duration-500 hover:bg-navy-light md:grid-cols-12 md:items-start"
-              >
-                <div className="md:col-span-2 flex flex-col gap-2">
-                  <span className="inline-flex w-fit border border-primary/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">
-                    {item.tag}
-                  </span>
-                  <div className="font-mono text-xs text-muted-foreground">{formatDate(item.date)}</div>
-                </div>
-                <div className="md:col-span-9">
-                  <h3 className="font-display text-xl md:text-2xl font-semibold leading-snug transition-colors group-hover:text-primary">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-base text-muted-foreground leading-relaxed">{item.excerpt}</p>
-                </div>
-                <ArrowUpRight
-                  className="md:col-span-1 ml-auto text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-primary"
-                  size={24}
-                />
-              </Link>
-            ))}
+            {rest.map((item) => {
+              const primaryImage = item.images[0];
+
+              return (
+                <Link
+                  key={item.slug}
+                  to={`/news/${item.slug}`}
+                  className="group grid gap-6 bg-navy-deep p-6 md:p-8 transition-all duration-500 hover:bg-navy-light md:grid-cols-12 md:items-start"
+                >
+                  <div className="md:col-span-2 flex flex-col gap-2">
+                    <span className="inline-flex w-fit border border-primary/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">
+                      {item.tag}
+                    </span>
+                    <div className="font-mono text-xs text-muted-foreground">{formatDate(item.date)}</div>
+                  </div>
+                  {primaryImage && (
+                    <div className="overflow-hidden border border-border md:col-span-3">
+                      <img
+                        src={primaryImage.src}
+                        alt={primaryImage.alt}
+                        className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <div className={primaryImage ? "md:col-span-6" : "md:col-span-9"}>
+                    <h3 className="font-display text-xl md:text-2xl font-semibold leading-snug transition-colors group-hover:text-primary">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-base text-muted-foreground leading-relaxed">{item.excerpt}</p>
+                  </div>
+                  <ArrowUpRight
+                    className="md:col-span-1 ml-auto text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-primary"
+                    size={24}
+                  />
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

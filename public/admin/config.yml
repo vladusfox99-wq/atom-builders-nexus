@@ -50,6 +50,19 @@ collections:
       - label: Краткое описание
         name: excerpt
         widget: text
+      - label: Изображения
+        name: images
+        widget: list
+        required: false
+        summary: "{{fields.alt}}"
+        fields:
+          - label: Файл
+            name: src
+            widget: image
+          - label: Alt-текст
+            name: alt
+            widget: string
+            required: false
       - label: Параграфы
         name: content
         widget: list

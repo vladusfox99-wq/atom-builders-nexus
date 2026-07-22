@@ -17,6 +17,12 @@ const NewsDetailPage = () => {
   const { slug } = useParams();
   const item = newsItems.find((newsItem) => newsItem.slug === slug);
   const otherItems = newsItems.filter((newsItem) => newsItem.slug !== slug).slice(0, 3);
+  const primaryImage = item?.images[0];
+  const structuredImage = primaryImage
+    ? primaryImage.src.startsWith("http")
+      ? primaryImage.src
+      : `${SITE_URL}${primaryImage.src}`
+    : DEFAULT_OG_IMAGE;
 
   usePageSeo({
     title: item ? `${item.title} — АСКАО` : "Новость не найдена — АСКАО",
@@ -35,7 +41,7 @@ const NewsDetailPage = () => {
           datePublished: `${item.date}T00:00:00+03:00`,
           dateModified: `${item.date}T00:00:00+03:00`,
           mainEntityOfPage: `${SITE_URL}/news/${item.slug}`,
-          image: DEFAULT_OG_IMAGE,
+          image: structuredImage,
           inLanguage: "ru-RU",
           publisher: {
             "@type": "Organization",
@@ -113,6 +119,16 @@ const NewsDetailPage = () => {
             <p className="mt-7 max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
               {item.excerpt}
             </p>
+            {primaryImage && (
+              <figure className="mt-10 max-w-5xl overflow-hidden border border-border bg-navy-deep">
+                <img
+                  src={primaryImage.src}
+                  alt={primaryImage.alt}
+                  className="aspect-[16/9] w-full object-cover"
+                  loading="eager"
+                />
+              </figure>
+            )}
           </div>
         </header>
 
@@ -124,6 +140,21 @@ const NewsDetailPage = () => {
                   <p key={index}>{paragraph}</p>
                 ))}
               </div>
+
+              {item.images.length > 1 && (
+                <div className="mt-12 grid gap-4 md:grid-cols-2">
+                  {item.images.slice(1).map((image) => (
+                    <figure key={image.src} className="overflow-hidden border border-border bg-navy-deep">
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="aspect-[4/3] w-full object-cover"
+                        loading="lazy"
+                      />
+                    </figure>
+                  ))}
+                </div>
+              )}
 
               <div className="mt-12 border-t border-border pt-8">
                 <Link
@@ -153,23 +184,37 @@ const NewsDetailPage = () => {
             </div>
 
             <div className="grid gap-px border border-border bg-border md:grid-cols-3">
-              {otherItems.map((otherItem) => (
-                <Link
-                  key={otherItem.slug}
-                  to={`/news/${otherItem.slug}`}
-                  className="group flex flex-col bg-navy-deep p-6 transition-colors hover:bg-navy-light"
-                >
-                  <span className="w-fit border border-primary/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">
-                    {otherItem.tag}
-                  </span>
-                  <h3 className="mt-5 font-display text-xl font-semibold leading-snug transition-colors group-hover:text-primary">
-                    {otherItem.title}
-                  </h3>
-                  <span className="mt-auto pt-6 font-mono text-xs text-muted-foreground">
-                    {formatDate(otherItem.date)}
-                  </span>
-                </Link>
-              ))}
+              {otherItems.map((otherItem) => {
+                const otherImage = otherItem.images[0];
+
+                return (
+                  <Link
+                    key={otherItem.slug}
+                    to={`/news/${otherItem.slug}`}
+                    className="group flex flex-col bg-navy-deep p-6 transition-colors hover:bg-navy-light"
+                  >
+                    {otherImage && (
+                      <div className="-m-6 mb-5 overflow-hidden border-b border-border">
+                        <img
+                          src={otherImage.src}
+                          alt={otherImage.alt}
+                          className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <span className="w-fit border border-primary/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">
+                      {otherItem.tag}
+                    </span>
+                    <h3 className="mt-5 font-display text-xl font-semibold leading-snug transition-colors group-hover:text-primary">
+                      {otherItem.title}
+                    </h3>
+                    <span className="mt-auto pt-6 font-mono text-xs text-muted-foreground">
+                      {formatDate(otherItem.date)}
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>

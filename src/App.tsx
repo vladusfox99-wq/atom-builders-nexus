@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { LanguageProvider } from "@/lib/i18n";
 
 const Index = lazy(() => import("./pages/Index.tsx"));
 const BusinessCardPage = lazy(() => import("./pages/BusinessCardPage.tsx"));
@@ -39,30 +40,32 @@ const RouteLoader = () => (
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Suspense fallback={<RouteLoader />}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/frolov" element={<BusinessCardPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/news" element={<NewsPage />} />
-            <Route path="/news/:slug" element={<NewsDetailPage />} />
-            <Route path="/members" element={<MembersPage />} />
-            <Route path="/clusters" element={<ClustersPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/committees" element={<CommitteesPage />} />
-            <Route path="/committees/:committeeId" element={<CommitteeDetailPage />} />
-            <Route path="/events" element={<EventsPage />} />
-            <Route path="/videos" element={<VideosPage />} />
-            <Route path="/admin/*" element={<AdminRedirectPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </TooltipProvider>
+    <LanguageProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Suspense fallback={<RouteLoader />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/frolov" element={<BusinessCardPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/news" element={<NewsPage />} />
+              <Route path="/news/:slug" element={<NewsDetailPage />} />
+              <Route path="/members" element={<MembersPage />} />
+              <Route path="/clusters" element={<ClustersPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/committees" element={<CommitteesPage />} />
+              <Route path="/committees/:committeeId" element={<CommitteeDetailPage />} />
+              <Route path="/events" element={<EventsPage />} />
+              <Route path="/videos" element={<VideosPage />} />
+              <Route path="/admin/*" element={<AdminRedirectPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </TooltipProvider>
+    </LanguageProvider>
   </QueryClientProvider>
 );
 

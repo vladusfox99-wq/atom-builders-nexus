@@ -27,16 +27,30 @@ const News = () => {
         </div>
 
         <div className="grid gap-px border border-border bg-border">
-          {previewItems.map((item) => (
-            <Link key={item.slug} to={`/news/${item.slug}`} className="group grid items-center gap-6 bg-navy-deep p-6 transition-all duration-500 hover:bg-navy-light md:grid-cols-12 md:p-8">
-              <div className="md:col-span-2 flex items-center gap-3">
-                <span className="border border-primary/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">{item.tag}</span>
-              </div>
-              <div className="md:col-span-2 text-sm font-mono text-muted-foreground">{formatDate(item.date)}</div>
-              <h3 className="md:col-span-7 font-display text-lg md:text-xl font-semibold leading-snug transition-colors group-hover:text-primary">{item.title}</h3>
-              <ArrowUpRight className="md:col-span-1 ml-auto text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-primary" size={22} />
-            </Link>
-          ))}
+          {previewItems.map((item) => {
+            const primaryImage = item.images[0];
+
+            return (
+              <Link key={item.slug} to={`/news/${item.slug}`} className="group grid items-center gap-6 bg-navy-deep p-6 transition-all duration-500 hover:bg-navy-light md:grid-cols-12 md:p-8">
+                <div className="md:col-span-2 flex items-center gap-3">
+                  <span className="border border-primary/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary">{item.tag}</span>
+                </div>
+                <div className="md:col-span-2 text-sm font-mono text-muted-foreground">{formatDate(item.date)}</div>
+                {primaryImage && (
+                  <div className="overflow-hidden border border-border md:col-span-2">
+                    <img
+                      src={primaryImage.src}
+                      alt={primaryImage.alt}
+                      className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <h3 className={`${primaryImage ? "md:col-span-5" : "md:col-span-7"} font-display text-lg md:text-xl font-semibold leading-snug transition-colors group-hover:text-primary`}>{item.title}</h3>
+                <ArrowUpRight className="md:col-span-1 ml-auto text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-primary" size={22} />
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

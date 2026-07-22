@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Logo from "@/components/askao/Logo";
+import { useLanguage } from "@/lib/i18n";
 
 const links = [
   { href: "/about", label: "О нас", isRoute: true },
@@ -34,6 +35,7 @@ const socialLinks = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { language, setLanguage } = useLanguage();
   const location = useLocation();
   const sectionBase = location.pathname === "/" ? "" : "/";
   const isActiveRoute = (href: string) =>
@@ -87,6 +89,27 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-2">
+          <div
+            className="hidden overflow-hidden rounded-full border border-border bg-navy-deep/70 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:flex"
+            aria-label="Language switcher"
+          >
+            {(["ru", "en"] as const).map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setLanguage(item)}
+                className={`px-3 py-2 transition-colors ${
+                  language === item
+                    ? "bg-primary text-primary-foreground"
+                    : "hover:text-foreground"
+                }`}
+                aria-pressed={language === item}
+              >
+                {item.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
           {socialLinks.map(({ href, label, Icon }) => (
             <a
               key={href}
@@ -109,6 +132,24 @@ const Navbar = () => {
       {open && (
         <div className="animate-fade-in border-t border-border bg-navy-deep/95 backdrop-blur-xl xl:hidden">
           <nav className="container flex flex-col gap-4 py-6">
+            <div className="flex w-fit overflow-hidden rounded-full border border-border bg-background/60 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:hidden">
+              {(["ru", "en"] as const).map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => setLanguage(item)}
+                  className={`px-3 py-2 transition-colors ${
+                    language === item
+                      ? "bg-primary text-primary-foreground"
+                      : "hover:text-foreground"
+                  }`}
+                  aria-pressed={language === item}
+                >
+                  {item.toUpperCase()}
+                </button>
+              ))}
+            </div>
+
             {links.map((link) =>
               link.isRoute ? (
                 <Link key={link.href} to={link.href} onClick={() => setOpen(false)} className="py-2 text-base font-medium text-muted-foreground hover:text-foreground">

@@ -5,11 +5,19 @@ export interface NewsItem {
   tag: string;
   excerpt: string;
   content: string[];
+  images: NewsImage[];
+}
+
+export interface NewsImage {
+  src: string;
+  alt: string;
 }
 
 type CmsContentItem = string | { text?: string };
-type CmsNewsItem = Omit<Partial<NewsItem>, "content"> & {
+type CmsImageItem = string | { src?: string; alt?: string };
+type CmsNewsItem = Omit<Partial<NewsItem>, "content" | "images"> & {
   content?: CmsContentItem[];
+  images?: CmsImageItem[];
 };
 
 const cmsNewsModules = import.meta.glob("./cms/news/*.json", { eager: true });
@@ -33,6 +41,26 @@ const normalizeNewsItem = (raw: CmsNewsItem): NewsItem | null => {
       return null;
     })
     .filter((value): value is string => value !== null);
+
+  const images = Array.isArray(raw.images)
+    ? raw.images
+        .map((value) => {
+          if (typeof value === "string") {
+            return { src: value, alt: raw.title };
+          }
+
+          if (value && typeof value === "object" && typeof value.src === "string") {
+            return {
+              src: value.src,
+              alt: typeof value.alt === "string" && value.alt.length > 0 ? value.alt : raw.title,
+            };
+          }
+
+          return null;
+        })
+        .filter((value): value is NewsImage => value !== null)
+    : [];
+
   return {
     slug: raw.slug,
     title: raw.title,
@@ -40,6 +68,7 @@ const normalizeNewsItem = (raw: CmsNewsItem): NewsItem | null => {
     tag: raw.tag,
     excerpt: raw.excerpt,
     content,
+    images,
   };
 };
 
