@@ -15,6 +15,9 @@ const links = [
   { href: "/videos", label: "Видео", isRoute: true },
 ];
 
+const hiddenRouteHrefs = new Set(["/committees"]);
+const visibleLinks = links.filter((link) => !hiddenRouteHrefs.has(link.href));
+
 const TelegramLogo = () => (
   <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
     <path d="M21.7 4.3c-.2-.2-.7-.3-1.3-.1L3.1 10.8c-1 .4-1 1-.2 1.2l4.4 1.4 1.7 5.2c.2.7.4 1 .7 1 .3 0 .5-.2.8-.5l2.4-2.3 4.7 3.4c.9.5 1.5.3 1.7-.8L22 5.8c.2-.8 0-1.3-.3-1.5Zm-3.2 2.8-8.7 7.8-.3 3-1-3.2-3.1-1L18.5 7Z" />
@@ -59,7 +62,7 @@ const Navbar = () => {
         </Link>
 
         <nav className="hidden items-center gap-6 xl:flex">
-          {links.map((link) =>
+          {visibleLinks.map((link) =>
             link.isRoute ? (
               <Link
                 key={link.href}
@@ -150,7 +153,7 @@ const Navbar = () => {
               ))}
             </div>
 
-            {links.map((link) =>
+            {visibleLinks.map((link) =>
               link.isRoute ? (
                 <Link key={link.href} to={link.href} onClick={() => setOpen(false)} className="py-2 text-base font-medium text-muted-foreground hover:text-foreground">
                   {link.label}

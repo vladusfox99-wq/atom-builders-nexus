@@ -1,3 +1,5 @@
+import { isCommitteeHidden } from "./visibility";
+
 export interface CommitteeMember {
   name: string;
   organization?: string;
@@ -73,4 +75,5 @@ const normalizeCommittee = (raw: CmsCommittee): Committee | null => {
 export const committees: Committee[] = Object.values(cmsCommitteeModules)
   .map((module) => normalizeCommittee((module as { default: CmsCommittee }).default))
   .filter((committee): committee is Committee => committee !== null)
+  .filter((committee) => !isCommitteeHidden(committee.id))
   .sort((left, right) => left.title.localeCompare(right.title, "ru"));

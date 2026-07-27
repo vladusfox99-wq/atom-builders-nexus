@@ -1,3 +1,5 @@
+import { isCommitteeHidden } from "./visibility";
+
 export interface CommitteeEvent {
   id: string;
   committeeId: string;
@@ -19,7 +21,7 @@ export interface CommitteeEvent {
   registrationUrl?: string;
 }
 
-export const committeeEvents: CommitteeEvent[] = [
+const allCommitteeEvents: CommitteeEvent[] = [
   {
     id: "international-policy-atomekspo-2026",
     committeeId: "international-cooperation",
@@ -114,3 +116,7 @@ export const committeeEvents: CommitteeEvent[] = [
     status: "past",
   },
 ];
+
+export const committeeEvents: CommitteeEvent[] = allCommitteeEvents.filter(
+  (event) => !isCommitteeHidden(event.committeeId),
+);

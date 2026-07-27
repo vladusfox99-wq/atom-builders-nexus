@@ -72,6 +72,9 @@ const staticPages = [
   },
 ];
 
+const hiddenStaticPagePaths = new Set(["/committees"]);
+const visibleStaticPages = staticPages.filter((page) => !hiddenStaticPagePaths.has(page.path));
+
 const escapeXml = (value) =>
   value
     .replaceAll("&", "&amp;")
@@ -101,7 +104,7 @@ const newsPages = await Promise.all(
   }),
 );
 
-const pages = [...staticPages, ...newsPages];
+const pages = [...visibleStaticPages, ...newsPages];
 const sitemapEntries = pages
   .map(({ path: pagePath, date }) => {
     const lastmod = date ? `\n    <lastmod>${escapeXml(date)}</lastmod>` : "";

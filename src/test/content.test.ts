@@ -12,8 +12,8 @@ describe("CMS content", () => {
     expect(Array.isArray(committees)).toBe(true);
   });
 
-  it("loads the international cooperation committee", () => {
-    expect(committees).toEqual(
+  it("hides the international cooperation committee from public content", () => {
+    expect(committees).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           id: "international-cooperation",
@@ -24,8 +24,8 @@ describe("CMS content", () => {
     );
   });
 
-  it("adds committee events to the shared event calendar", () => {
-    expect(events).toEqual(
+  it("omits hidden committee events from the shared event calendar", () => {
+    expect(events).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           id: "international-policy-innoprom-central-asia-2026",
