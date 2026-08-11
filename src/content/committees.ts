@@ -72,8 +72,12 @@ const normalizeCommittee = (raw: CmsCommittee): Committee | null => {
   };
 };
 
-export const committees: Committee[] = Object.values(cmsCommitteeModules)
+const allCommittees: Committee[] = Object.values(cmsCommitteeModules)
   .map((module) => normalizeCommittee((module as { default: CmsCommittee }).default))
   .filter((committee): committee is Committee => committee !== null)
-  .filter((committee) => !isCommitteeHidden(committee.id))
   .sort((left, right) => left.title.localeCompare(right.title, "ru"));
+
+export const committees = allCommittees.filter((committee) => !isCommitteeHidden(committee.id));
+
+export const getCommitteeById = (committeeId: string | undefined) =>
+  allCommittees.find((committee) => committee.id === committeeId);

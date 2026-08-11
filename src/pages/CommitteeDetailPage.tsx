@@ -31,7 +31,8 @@ import countriesAtlas from "world-atlas/countries-110m.json";
 import Navbar from "@/components/askao/Navbar";
 import Footer from "@/components/askao/Footer";
 import { committeeEvents } from "@/content/committeeEvents";
-import { committees } from "@/content/committees";
+import { getCommitteeById } from "@/content/committees";
+import { isCommitteeHidden } from "@/content/visibility";
 import askAoLogo from "@/assets/askao-logo.png";
 import committeeHeroImage from "@/assets/international-committee-hero.png";
 import { usePageSeo } from "@/lib/seo";
@@ -475,7 +476,7 @@ type GlobeDragStart = {
 
 const CommitteeDetailPage = () => {
   const { committeeId } = useParams();
-  const committee = committees.find((item) => item.id === committeeId);
+  const committee = getCommitteeById(committeeId);
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
   const [galleryFilter, setGalleryFilter] = useState("все");
   const [globeRotation, setGlobeRotation] = useState<[number, number]>(globeInitialRotation);
@@ -555,6 +556,7 @@ const CommitteeDetailPage = () => {
       "Информация о комитете АСКАО не найдена или еще готовится к публикации.",
     path: committee?.pagePath ?? "/committees",
     image: committeeHeroImage,
+    noIndex: !committee || isCommitteeHidden(committee.id),
   });
 
   if (!committee) {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { committees } from "@/content/committees";
+import { committees, getCommitteeById } from "@/content/committees";
 import { events } from "@/content/events";
 import { newsItems } from "@/content/news";
 import { videos } from "@/content/videos";
@@ -21,6 +21,15 @@ describe("CMS content", () => {
           pagePath: "/committees/international-cooperation",
         }),
       ]),
+    );
+  });
+
+  it("keeps the hidden international committee available by its direct link", () => {
+    expect(getCommitteeById("international-cooperation")).toEqual(
+      expect.objectContaining({
+        title: "Комитет по международной политике АСКАО",
+        pagePath: "/committees/international-cooperation",
+      }),
     );
   });
 
