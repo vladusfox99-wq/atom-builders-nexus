@@ -13,7 +13,7 @@ const staticPages = [
     path: "/",
     title: "АСКАО — Ассоциация строительного комплекса атомной отрасли",
     description:
-      "АСКАО объединяет 120+ организаций строительного комплекса атомной отрасли России для реализации крупнейших инфраструктурных проектов.",
+      "АСКАО объединяет 130+ организаций строительного комплекса атомной отрасли России для реализации крупнейших инфраструктурных проектов.",
   },
   {
     path: "/frolov",
@@ -120,7 +120,7 @@ await writeFile(path.join(publicDir, "sitemap.xml"), sitemap, "utf8");
 await writeFile(path.join(publicDir, "robots.txt"), robots, "utf8");
 
 if (writeRouteShells) {
-  const distDir = path.join(root, "dist");
+  const distDir = path.join(root, "dist", "client");
   const template = await readFile(path.join(distDir, "index.html"), "utf8");
 
   for (const page of pages.filter((item) => item.path !== "/")) {
@@ -149,7 +149,7 @@ if (writeRouteShells) {
               url: `${siteUrl}/`,
               logo: {
                 "@type": "ImageObject",
-                url: `${siteUrl}/favicon.png`,
+                url: `${siteUrl}/askao-logo.png`,
               },
             }
           : undefined,
@@ -203,7 +203,7 @@ if (writeRouteShells) {
         `<script type="application/ld+json" data-seo-structured-data="true">${compactSchema}</script>${publishedMeta}`,
       );
 
-    const routeFile = path.join(distDir, `${page.path.slice(1)}.html`);
+    const routeFile = path.join(distDir, page.path.slice(1), "index.html");
     await mkdir(path.dirname(routeFile), { recursive: true });
     await writeFile(routeFile, html, "utf8");
   }

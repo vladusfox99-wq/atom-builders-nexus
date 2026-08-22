@@ -71,8 +71,8 @@ const exactTranslations: Record<string, string> = {
     "ASKAO forms professional teams and consolidates resources to deliver strategic nuclear energy facilities in Russia and abroad.",
   "Крупнейшая ассоциация строительного комплекса атомной отрасли России":
     "Russia's largest association in the nuclear industry construction complex",
-  "120+ организаций — от проектных до подрядных":
-    "120+ organizations — from design companies to contractors",
+  "130+ организаций — от проектных до подрядных":
+    "130+ organizations — from design companies to contractors",
   "Прямое участие в программах Госкорпорации «Росатом»":
     "Direct participation in Rosatom State Corporation programs",
   "Полный цикл компетенций: от концепции до ввода в эксплуатацию":
@@ -121,8 +121,8 @@ const exactTranslations: Record<string, string> = {
   "Все участники": "All Members",
   "Экосистема крупных игроков": "An ecosystem of major players",
   "крупных игроков": "major players",
-  "120+ организаций — проектировщики, производители и подрядные организации, формирующие опорный каркас атомного строительства.":
-    "120+ organizations — designers, manufacturers and contractors forming the backbone of nuclear construction.",
+  "130+ организаций — проектировщики, производители и подрядные организации, формирующие опорный каркас атомного строительства.":
+    "130+ organizations — designers, manufacturers and contractors forming the backbone of nuclear construction.",
 
   "Инновации": "Innovation",
   "Технологии, меняющие отрасль": "Technologies changing the industry",

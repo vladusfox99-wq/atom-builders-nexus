@@ -9,7 +9,7 @@ public_folder: /uploads
 
 site_url: /
 display_url: /
-logo_url: /favicon.ico
+logo_url: /askao-logo.png
 locale: ru
 
 collections:

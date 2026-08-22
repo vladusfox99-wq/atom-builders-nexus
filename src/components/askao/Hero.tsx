@@ -34,7 +34,7 @@ const Hero = () => {
 
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
             {[
-              { v: "120+", l: "организаций" },
+              { v: "130+", l: "организаций" },
               { v: "70%", l: "работ Росатома" },
               { v: "15+", l: "лет в отрасли" },
               { v: "10+", l: "стран присутствия" },

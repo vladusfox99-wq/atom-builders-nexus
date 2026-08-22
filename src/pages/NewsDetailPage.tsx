@@ -49,7 +49,7 @@ const NewsDetailPage = () => {
             url: `${SITE_URL}/`,
             logo: {
               "@type": "ImageObject",
-              url: `${SITE_URL}/favicon.png`,
+              url: `${SITE_URL}/askao-logo.png`,
             },
           },
         }
