@@ -656,4 +656,14 @@ const legacyOnlyMembers: Member[] = resolvedLegacyMembers
     clusters: ["Без кластера"],
   }));
 
-export const members: Member[] = [...importedMembers, ...legacyOnlyMembers];
+export const members: Member[] = [
+  ...importedMembers,
+  ...legacyOnlyMembers,
+  {
+    name: "Производственное объединение «Атомхимстрой»",
+    logo: "/member-logos-traced/atomkhimstroy-white.svg",
+    description:
+      "Разработчик и изготовитель теплообменного, емкостного и сложного нестандартизированного оборудования для объектов атомной энергетики и крупных химических производств.",
+    clusters: ["Без кластера"],
+  },
+];

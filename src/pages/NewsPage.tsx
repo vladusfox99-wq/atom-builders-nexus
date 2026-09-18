@@ -69,7 +69,7 @@ const NewsPage = () => {
                     <img
                       src={featuredImage.src}
                       alt={featuredImage.alt}
-                      className="aspect-[16/9] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className={featuredImage.fit === "contain" ? "mx-auto h-auto w-full max-w-[720px]" : "aspect-[16/9] w-full object-cover transition-transform duration-700 group-hover:scale-105"}
                       loading="eager"
                     />
                   </Link>
@@ -114,7 +114,7 @@ const NewsPage = () => {
                       <img
                         src={primaryImage.src}
                         alt={primaryImage.alt}
-                        className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className={`aspect-[16/10] w-full ${primaryImage.fit === "contain" ? "object-contain" : "object-cover transition-transform duration-700 group-hover:scale-105"}`}
                         loading="lazy"
                       />
                     </div>

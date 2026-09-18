@@ -12,6 +12,7 @@ export interface AssociationEvent {
   format: "Очно" | "Онлайн" | "Гибрид";
   description: string;
   registrationUrl?: string;
+  detailsUrl?: string;
   source?: "association" | "committee";
   committeeId?: string;
   committeeTitle?: string;
@@ -58,6 +59,10 @@ const normalizeEvent = (raw: CmsEvent): AssociationEvent | null => {
     registrationUrl:
       typeof raw.registrationUrl === "string" && raw.registrationUrl.trim()
         ? raw.registrationUrl.trim()
+        : undefined,
+    detailsUrl:
+      typeof raw.detailsUrl === "string" && raw.detailsUrl.startsWith("/news/")
+        ? raw.detailsUrl
         : undefined,
     source: "association",
   };

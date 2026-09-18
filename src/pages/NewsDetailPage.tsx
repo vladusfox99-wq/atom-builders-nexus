@@ -30,6 +30,7 @@ const NewsDetailPage = () => {
       item?.excerpt ?? "Запрошенная новость не найдена на сайте АСКАО.",
     path: `/news/${slug ?? ""}`,
     type: item ? "article" : "website",
+    image: structuredImage,
     noIndex: !item,
     publishedTime: item ? `${item.date}T00:00:00+03:00` : undefined,
     structuredData: item
@@ -124,7 +125,7 @@ const NewsDetailPage = () => {
                 <img
                   src={primaryImage.src}
                   alt={primaryImage.alt}
-                  className="aspect-[16/9] w-full object-cover"
+                  className={primaryImage.fit === "contain" ? "mx-auto h-auto w-full max-w-[720px]" : "aspect-[16/9] w-full object-cover"}
                   loading="eager"
                 />
               </figure>
@@ -136,9 +137,23 @@ const NewsDetailPage = () => {
           <div className="container">
             <div className="mx-auto max-w-3xl">
               <div className="space-y-6 text-base leading-[1.85] text-foreground/85 md:text-lg">
-                {item.content.map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
+                {item.content.map((block, index) => {
+                  if (typeof block === "string") return <p key={index}>{block}</p>;
+                  if (block.type === "heading") return (
+                    <h2 key={index} className="pt-6 font-display text-2xl font-semibold leading-tight text-foreground md:text-3xl">{block.text}</h2>
+                  );
+                  if (block.type === "list") return (
+                    <ul key={index} className="list-disc space-y-3 pl-6 marker:text-primary">
+                      {block.items.map((text, itemIndex) => <li key={itemIndex} className="pl-2">{text}</li>)}
+                    </ul>
+                  );
+                  return (
+                    <aside key={index} className="border-l-4 border-primary bg-navy p-6 md:p-8">
+                      <h2 className="font-display text-xl font-semibold leading-snug text-foreground md:text-2xl">{block.title}</h2>
+                      <p className="mt-3 whitespace-pre-line">{block.text}</p>
+                    </aside>
+                  );
+                })}
               </div>
 
               {item.images.length > 1 && (
@@ -198,7 +213,7 @@ const NewsDetailPage = () => {
                         <img
                           src={otherImage.src}
                           alt={otherImage.alt}
-                          className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          className={`aspect-[16/10] w-full ${otherImage.fit === "contain" ? "object-contain" : "object-cover transition-transform duration-700 group-hover:scale-105"}`}
                           loading="lazy"
                         />
                       </div>

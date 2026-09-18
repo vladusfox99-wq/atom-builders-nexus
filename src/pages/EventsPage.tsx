@@ -100,6 +100,15 @@ const EventCard = ({ event }: { event: AssociationEvent }) => (
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">
         {event.description}
       </p>
+      {event.detailsUrl && (
+        <Link
+          to={event.detailsUrl}
+          className="mt-5 inline-flex items-center gap-2 border border-primary/40 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+        >
+          Подробнее о мероприятии
+          <ArrowUpRight size={16} />
+        </Link>
+      )}
       {event.registrationUrl && (
         <a
           href={event.registrationUrl}
@@ -215,7 +224,7 @@ const EventsPage = () => {
                 >
                   <ChevronLeft size={20} />
                 </button>
-                <h2 className="font-display text-xl font-semibold capitalize md:text-2xl">
+                <h2 key={toDateKey(visibleMonth)} className="font-display text-xl font-semibold capitalize md:text-2xl">
                   {formatMonth(visibleMonth)}
                 </h2>
                 <button
@@ -329,7 +338,7 @@ const EventsPage = () => {
       <section className="py-16 md:py-24">
         <div className="container">
           <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
+            <div key={selectedDate ?? "all-events"}>
               <div className="section-label mb-4">
                 {selectedDate ? "Выбранная дата" : "Архив"}
               </div>

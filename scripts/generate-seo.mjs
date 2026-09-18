@@ -94,12 +94,15 @@ const newsFiles = (await readdir(newsDir)).filter((file) => file.endsWith(".json
 const newsPages = await Promise.all(
   newsFiles.map(async (file) => {
     const item = JSON.parse(await readFile(path.join(newsDir, file), "utf8"));
+    const primaryImage = item.images?.[0];
+    const imagePath = typeof primaryImage === "string" ? primaryImage : primaryImage?.src;
     return {
       path: `/news/${item.slug}`,
       title: `${item.title} — АСКАО`,
       description: item.excerpt,
       date: item.date,
       type: "article",
+      image: imagePath ? new URL(imagePath, siteUrl).href : undefined,
     };
   }),
 );

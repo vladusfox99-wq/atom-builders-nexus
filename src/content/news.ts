@@ -4,17 +4,23 @@ export interface NewsItem {
   date: string;
   tag: string;
   excerpt: string;
-  content: string[];
+  content: NewsContentBlock[];
   images: NewsImage[];
 }
 
 export interface NewsImage {
   src: string;
   alt: string;
+  fit?: "contain" | "cover";
 }
 
-type CmsContentItem = string | { text?: string };
-type CmsImageItem = string | { src?: string; alt?: string };
+export type NewsContentBlock = string
+  | { type: "heading"; text: string }
+  | { type: "list"; items: string[] }
+  | { type: "callout"; title: string; text: string };
+
+type CmsContentItem = string | { type?: string; text?: string; title?: string; items?: string[] };
+type CmsImageItem = string | { src?: string; alt?: string; fit?: "contain" | "cover" };
 type CmsNewsItem = Omit<Partial<NewsItem>, "content" | "images"> & {
   content?: CmsContentItem[];
   images?: CmsImageItem[];
@@ -35,16 +41,25 @@ const normalizeNewsItem = (raw: CmsNewsItem): NewsItem | null => {
   }
 
   const content = raw.content
-    .map((value) => {
+    .map((value): NewsContentBlock | null => {
       if (typeof value === "string") return value;
+      if (value?.type === "list" && Array.isArray(value.items)) {
+        return { type: "list", items: value.items.filter((item): item is string => typeof item === "string") };
+      }
+      if (value?.type === "heading" && typeof value.text === "string") {
+        return { type: "heading", text: value.text };
+      }
+      if (value?.type === "callout" && typeof value.title === "string" && typeof value.text === "string") {
+        return { type: "callout", title: value.title, text: value.text };
+      }
       if (value && typeof value === "object" && typeof value.text === "string") return value.text;
       return null;
     })
-    .filter((value): value is string => value !== null);
+    .filter((value): value is NewsContentBlock => value !== null);
 
   const images = Array.isArray(raw.images)
     ? raw.images
-        .map((value) => {
+        .map((value): NewsImage | null => {
           if (typeof value === "string") {
             return { src: value, alt: raw.title };
           }
@@ -53,6 +68,7 @@ const normalizeNewsItem = (raw: CmsNewsItem): NewsItem | null => {
             return {
               src: value.src,
               alt: typeof value.alt === "string" && value.alt.length > 0 ? value.alt : raw.title,
+              fit: value.fit === "contain" ? "contain" : "cover",
             };
           }
 
