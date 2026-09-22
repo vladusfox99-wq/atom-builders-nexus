@@ -163,7 +163,7 @@ const NewsDetailPage = () => {
                       <img
                         src={image.src}
                         alt={image.alt}
-                        className="aspect-[4/3] w-full object-cover"
+                        className={image.fit === "contain" ? "h-auto w-full" : "aspect-[4/3] w-full object-cover"}
                         loading="lazy"
                       />
                     </figure>
