@@ -6,6 +6,7 @@ export interface NewsItem {
   excerpt: string;
   content: NewsContentBlock[];
   images: NewsImage[];
+  publicationUrl?: string;
 }
 
 export interface NewsImage {
@@ -85,6 +86,8 @@ const normalizeNewsItem = (raw: CmsNewsItem): NewsItem | null => {
     excerpt: raw.excerpt,
     content,
     images,
+    publicationUrl: typeof raw.publicationUrl === "string" && /^\/publications\/[a-z0-9-]+$/.test(raw.publicationUrl)
+      ? raw.publicationUrl : undefined,
   };
 };
 

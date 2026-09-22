@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { translateText, useLanguage } from "@/lib/i18n";
 
 export const SITE_URL = "https://xn--80aa3arm.xn--p1ai";
 export const SITE_NAME = "АСКАО";
@@ -52,12 +53,13 @@ export const usePageSeo = ({
   publishedTime,
   structuredData,
 }: PageSeo) => {
+  const { language } = useLanguage();
   useEffect(() => {
     const pathname = path ?? window.location.pathname;
     const canonicalUrl = `${SITE_URL}${pathname === "/" ? "/" : pathname.replace(/\/+$/, "")}`;
     const imageUrl = getAbsoluteUrl(image);
 
-    document.title = title;
+    document.title = translateText(title, language);
     setCanonical(canonicalUrl);
     setMeta('meta[name="description"]', { name: "description", content: description });
     setMeta('meta[name="robots"]', {
@@ -123,6 +125,7 @@ export const usePageSeo = ({
     }
     script.textContent = JSON.stringify(schema);
   }, [
+    language,
     description,
     image,
     noIndex,

@@ -11,6 +11,7 @@ const BusinessCardPage = lazy(() => import("./pages/BusinessCardPage.tsx"));
 const AboutPage = lazy(() => import("./pages/AboutPage.tsx"));
 const NewsPage = lazy(() => import("./pages/NewsPage.tsx"));
 const NewsDetailPage = lazy(() => import("./pages/NewsDetailPage.tsx"));
+const PublicationsPage = lazy(() => import("./pages/PublicationsPage.tsx"));
 const MembersPage = lazy(() => import("./pages/MembersPage.tsx"));
 const ClustersPage = lazy(() => import("./pages/ClustersPage.tsx"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage.tsx"));
@@ -52,6 +53,8 @@ const App = () => (
               <Route path="/about" element={<AboutPage />} />
               <Route path="/news" element={<NewsPage />} />
               <Route path="/news/:slug" element={<NewsDetailPage />} />
+              <Route path="/publications" element={<PublicationsPage />} />
+              <Route path="/publications/:slug" element={<PublicationsPage />} />
               <Route path="/members" element={<MembersPage />} />
               <Route path="/clusters" element={<ClustersPage />} />
               <Route path="/projects" element={<ProjectsPage />} />

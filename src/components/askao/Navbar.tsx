@@ -11,6 +11,7 @@ const links = [
   { href: "/clusters", label: "Кластеры", isRoute: true },
   { href: "/projects", label: "Проекты", isRoute: true },
   { href: "/news", label: "Новости", isRoute: true },
+  { href: "/publications", label: "Публикации", isRoute: true },
   { href: "/events", label: "Календарь", isRoute: true },
   { href: "/videos", label: "Видео", isRoute: true },
 ];

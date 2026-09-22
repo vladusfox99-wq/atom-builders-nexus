@@ -107,7 +107,21 @@ const newsPages = await Promise.all(
   }),
 );
 
-const pages = [...visibleStaticPages, ...newsPages];
+const publication = JSON.parse(await readFile(path.join(root, "src/content/publication.json"), "utf8"));
+const publicationPages = [
+  { path: "/publications", title: "Публикации — АСКАО",
+    description: "Научные статьи и экспертные материалы по вопросам строительного комплекса атомной отрасли." },
+  { path: `/publications/${publication.slug}`, title: `${publication.title} — АСКАО`,
+    description: publication.abstract, type: "article", schema: publication.schema },
+];
+const committeeDir = path.join(root, "src/content/cms/committees");
+const committeePages = await Promise.all((await readdir(committeeDir)).filter(file => file.endsWith(".json")).map(async file => {
+  const item = JSON.parse(await readFile(path.join(committeeDir, file), "utf8"));
+  return { path: `/committees/${item.id}`, title: `${item.title} — АСКАО`, description: item.description };
+}));
+const pages = [...visibleStaticPages, ...newsPages, ...publicationPages];
+// Hidden navigation is not a removed route. Keep existing committee deep links.
+const routePages = [...staticPages, ...newsPages, ...publicationPages, ...committeePages];
 const sitemapEntries = pages
   .map(({ path: pagePath, date }) => {
     const lastmod = date ? `\n    <lastmod>${escapeXml(date)}</lastmod>` : "";
@@ -126,14 +140,14 @@ if (writeRouteShells) {
   const distDir = path.join(root, "dist", "client");
   const template = await readFile(path.join(distDir, "index.html"), "utf8");
 
-  for (const page of pages.filter((item) => item.path !== "/")) {
+  for (const page of routePages.filter((item) => item.path !== "/")) {
     const canonical = `${siteUrl}${page.path}`;
     const type = page.type ?? "website";
     const image = page.image ?? `${siteUrl}/og-image.webp`;
     const publishedMeta = page.date
       ? `\n    <meta property="article:published_time" content="${escapeHtml(`${page.date}T00:00:00+03:00`)}" />`
       : "";
-    const schema = {
+    const schema = page.schema ?? {
       "@context": "https://schema.org",
       "@type": type === "article" ? "NewsArticle" : "WebPage",
       name: page.title,
@@ -210,6 +224,15 @@ if (writeRouteShells) {
     await mkdir(path.dirname(routeFile), { recursive: true });
     await writeFile(routeFile, html, "utf8");
   }
+
+  const notFound = template
+    .replace(/<title>.*?<\/title>/s, "<title>Страница не найдена — АСКАО</title>")
+    .replace(/<meta name="robots" content=".*?"\s*\/?>/s, '<meta name="robots" content="noindex, nofollow" />')
+    .replace(/<meta name="description" content=".*?"\s*\/?>/s, '<meta name="description" content="Запрошенная страница не найдена на сайте АСКАО." />')
+    .replace(/<link rel="canonical"[^>]*>/s, "")
+    .replace(/<meta (?:property="og:[^"]+"|name="twitter:[^"]+")[^>]*>/g, "")
+    .replace(/<script type="application\/ld\+json" data-seo-structured-data="true">.*?<\/script>/s, "");
+  await writeFile(path.join(distDir, "404.html"), notFound, "utf8");
 }
 
 console.log(

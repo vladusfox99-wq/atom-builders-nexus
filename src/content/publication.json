@@ -1,0 +1,23 @@
+{
+  "slug": "izvlechenie-bitumirovannyh-rao-2026",
+  "title": "Способ извлечения и утилизации термально отверждаемых битумированных радиоактивных отходов из реконструируемых промежуточных хранилищ",
+  "authors": ["С. И. Бехтев", "С. А. Кургуз", "В. А. Соколик"],
+  "abstract": "Авторы рассматривают технологический подход к механизированному извлечению битумированных радиоактивных отходов из промежуточных хранилищ с применением стандартного промышленного оборудования.",
+  "context": "В статье обсуждаются особенности обращения с извлекаемыми отходами, радиационный контроль и последующая реконструкция хранилищ. Авторы анализируют возможности и ограничения предлагаемого подхода.",
+  "source": "https://ivdon.ru/ru/magazine/archive/n8y2026/11603",
+  "pdf": "/publications/files/izvlechenie-bitumirovannyh-rao-2026.pdf",
+  "citation": "Бехтев С. И., Кургуз С. А., Соколик В. А. Способ извлечения и утилизации термально отверждаемых битумированных радиоактивных отходов из реконструируемых промежуточных хранилищ // Инженерный вестник Дона. 2026. № 8. URL: https://ivdon.ru/ru/magazine/archive/n8y2026/11603",
+  "schema": {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Способ извлечения и утилизации термально отверждаемых битумированных радиоактивных отходов из реконструируемых промежуточных хранилищ",
+    "abstract": "Авторы рассматривают технологический подход к механизированному извлечению битумированных радиоактивных отходов из промежуточных хранилищ с применением стандартного промышленного оборудования.",
+    "author": [{"@type": "Person", "name": "С. И. Бехтев"}, {"@type": "Person", "name": "С. А. Кургуз"}, {"@type": "Person", "name": "В. А. Соколик"}],
+    "isPartOf": {"@type": "PublicationIssue", "issueNumber": "8", "datePublished": "2026", "isPartOf": {"@type": "Periodical", "name": "Инженерный вестник Дона"}},
+    "inLanguage": "ru-RU",
+    "url": "https://xn--80aa3arm.xn--p1ai/publications/izvlechenie-bitumirovannyh-rao-2026",
+    "sameAs": "https://ivdon.ru/ru/magazine/archive/n8y2026/11603",
+    "encoding": {"@type": "MediaObject", "contentUrl": "https://xn--80aa3arm.xn--p1ai/publications/files/izvlechenie-bitumirovannyh-rao-2026.pdf", "encodingFormat": "application/pdf"},
+    "pagination": "1–19"
+  }
+}

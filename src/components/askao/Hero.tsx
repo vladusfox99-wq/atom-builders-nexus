@@ -23,7 +23,7 @@ const Hero = () => {
         <div className="max-w-5xl">
           <div className="section-label mb-8 animate-fade-in">Ассоциация · с 2018 года</div>
 
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight text-foreground animate-fade-in-up">
+          <h1 className="font-display text-[clamp(2rem,10vw,3rem)] sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight text-foreground animate-fade-in-up">
             АСКАО — <span className="text-gradient">ядро</span> строительного комплекса <br className="hidden md:block" />
             атомной отрасли
           </h1>

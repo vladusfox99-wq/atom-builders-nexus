@@ -4,7 +4,6 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -22,6 +21,7 @@ const STORAGE_KEY = "askao-language";
 const DEFAULT_LANGUAGE: Language = "ru";
 
 const exactTranslations: Record<string, string> = {
+  "Публикации": "Publications",
   "Загрузка страницы": "Loading page",
   "Меню": "Menu",
   "О нас": "About",
@@ -547,7 +547,6 @@ const wordTranslations: Record<string, string> = {
 };
 
 const cyrillicPattern = /[А-Яа-яЁё]/;
-const textNodeOriginals = new WeakMap<Text, string>();
 
 const preserveWhitespace = (source: string, translated: string) => {
   const leading = source.match(/^\s*/)?.[0] ?? "";
@@ -569,7 +568,7 @@ export const translateText = (source: string, language: Language = "en") => {
     translated = translated.split(ru).join(en);
   }
 
-  translated = translated.replace(/\b[А-Яа-яЁёA-Za-z0-9«»"().\-]+/g, (token) => {
+  translated = translated.replace(/\b[А-Яа-яЁёA-Za-z0-9«»"().-]+/g, (token) => {
     const clean = token.replace(/[«»"().,;:!?]/g, "");
     const replacement = wordTranslations[clean];
     return replacement ? token.replace(clean, replacement) : token;
@@ -578,48 +577,66 @@ export const translateText = (source: string, language: Language = "en") => {
   return preserveWhitespace(source, translated);
 };
 
-const translateAttribute = (element: Element, attribute: string, language: Language) => {
-  const current = element.getAttribute(attribute);
-  if (!current) return;
+// Compatibility translation for the existing English version. React remains the
+// source of truth: new values replace the cache, and our writes are not observed.
+const observeEnglishTranslation = () => {
+  type Translation = { source: string; applied: string };
+  const texts = new Map<Text, Translation>();
+  const attributes = new Map<Element, Map<string, Translation>>();
+  const attributeNames = ["aria-label", "alt", "title", "placeholder"];
+  let frame: number | undefined;
+  const options = { childList: true, subtree: true, characterData: true,
+    attributes: true, attributeFilter: attributeNames };
 
-  const originalAttribute = `data-i18n-original-${attribute}`;
-  const original = element.getAttribute(originalAttribute) ?? current;
-
-  if (!element.hasAttribute(originalAttribute) && cyrillicPattern.test(current)) {
-    element.setAttribute(originalAttribute, current);
-  }
-
-  element.setAttribute(attribute, language === "ru" ? original : translateText(original, language));
-};
-
-const translateElementTree = (root: ParentNode, language: Language) => {
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-  const textNodes: Text[] = [];
-
-  while (walker.nextNode()) {
-    textNodes.push(walker.currentNode as Text);
-  }
-
-  textNodes.forEach((node) => {
-    const original = textNodeOriginals.get(node) ?? node.nodeValue ?? "";
-    if (!textNodeOriginals.has(node) && cyrillicPattern.test(original)) {
-      textNodeOriginals.set(node, original);
+  const translate = (current: string, previous?: Translation): Translation => {
+    const source = previous?.applied === current ? previous.source : current;
+    return { source, applied: translateText(source, "en") };
+  };
+  const apply = () => {
+    frame = undefined;
+    observer.disconnect();
+    texts.forEach((_, node) => { if (!node.isConnected) texts.delete(node); });
+    attributes.forEach((_, element) => { if (!element.isConnected) attributes.delete(element); });
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      const node = walker.currentNode as Text;
+      if (node.parentElement?.closest('script, style, textarea, input, [translate="no"]')) continue;
+      const current = node.nodeValue ?? "";
+      const record = translate(current, texts.get(node));
+      if (record.source !== record.applied) texts.set(node, record);
+      else texts.delete(node);
+      if (current !== record.applied) node.nodeValue = record.applied;
     }
-
-    if (!textNodeOriginals.has(node)) return;
-    node.nodeValue = language === "ru" ? original : translateText(original, language);
+    document.body.querySelectorAll<Element>("[aria-label], [alt], [title], [placeholder]").forEach(element => {
+      if (element.closest('[translate="no"]')) return;
+      const records = attributes.get(element) ?? new Map<string, Translation>();
+      attributeNames.forEach(attribute => {
+        const current = element.getAttribute(attribute);
+        if (current === null) { records.delete(attribute); return; }
+        const record = translate(current, records.get(attribute));
+        if (record.source !== record.applied) records.set(attribute, record);
+        else records.delete(attribute);
+        if (current !== record.applied) element.setAttribute(attribute, record.applied);
+      });
+      if (records.size) attributes.set(element, records);
+      else attributes.delete(element);
+    });
+    observer.observe(document.body, options);
+  };
+  const observer = new MutationObserver(() => {
+    if (frame === undefined) frame = window.requestAnimationFrame(apply);
   });
-
-  const elements =
-    root instanceof Element
-      ? [root, ...Array.from(root.querySelectorAll("*"))]
-      : Array.from(root.querySelectorAll("*"));
-
-  elements.forEach((element) => {
-    ["aria-label", "alt", "title", "placeholder"].forEach((attribute) =>
-      translateAttribute(element, attribute, language),
-    );
-  });
+  apply();
+  return () => {
+    observer.disconnect();
+    if (frame !== undefined) window.cancelAnimationFrame(frame);
+    texts.forEach(({ source, applied }, node) => {
+      if (node.isConnected && node.nodeValue === applied) node.nodeValue = source;
+    });
+    attributes.forEach((records, element) => records.forEach(({ source, applied }, attribute) => {
+      if (element.isConnected && element.getAttribute(attribute) === applied) element.setAttribute(attribute, source);
+    }));
+  };
 };
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
@@ -632,7 +649,6 @@ const getInitialLanguage = (): Language => {
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<Language>(getInitialLanguage);
-  const originalTitleRef = useRef<string | null>(null);
 
   const setLanguage = useCallback((nextLanguage: Language) => {
     setLanguageState(nextLanguage);
@@ -644,39 +660,8 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   }, [language, setLanguage]);
 
   useEffect(() => {
-    let isApplying = false;
-
-    const applyTranslation = () => {
-      if (isApplying) return;
-      isApplying = true;
-      document.documentElement.lang = language;
-      if (!originalTitleRef.current && cyrillicPattern.test(document.title)) {
-        originalTitleRef.current = document.title;
-      }
-      document.title =
-        language === "ru"
-          ? originalTitleRef.current ?? document.title
-          : translateText(originalTitleRef.current ?? document.title, language);
-      translateElementTree(document.body, language);
-      isApplying = false;
-    };
-
-    applyTranslation();
-
-    const observer = new MutationObserver(() => {
-      if (isApplying) return;
-      window.requestAnimationFrame(applyTranslation);
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ["aria-label", "alt", "title", "placeholder"],
-    });
-
-    return () => observer.disconnect();
+    document.documentElement.lang = language;
+    if (language === "en") return observeEnglishTranslation();
   }, [language]);
 
   const value = useMemo<LanguageContextValue>(

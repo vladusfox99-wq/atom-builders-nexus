@@ -114,7 +114,7 @@ const NewsDetailPage = () => {
               </span>
             </div>
 
-            <h1 className="mt-7 max-w-5xl font-display text-4xl font-bold leading-[1.08] tracking-tight md:text-6xl lg:text-7xl">
+            <h1 className="mt-7 max-w-5xl font-display text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl md:text-6xl lg:text-7xl">
               {item.title}
             </h1>
             <p className="mt-7 max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
@@ -155,6 +155,16 @@ const NewsDetailPage = () => {
                   );
                 })}
               </div>
+
+              {item.publicationUrl && (
+                <aside className="mt-10 border border-border bg-navy p-6 md:p-8">
+                  <h2 className="font-display text-2xl font-semibold">Полный текст статьи</h2>
+                  <p className="mt-3 text-muted-foreground">Аннотация, авторы и оригинальный PDF — 19 страниц.</p>
+                  <Link to={item.publicationUrl} className="mt-6 inline-flex items-center gap-2 border border-primary bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary-glow">
+                    Перейти к публикации →
+                  </Link>
+                </aside>
+              )}
 
               {item.images.length > 1 && (
                 <div className="mt-12 grid gap-4 md:grid-cols-2">
