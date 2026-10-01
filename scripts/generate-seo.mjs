@@ -108,11 +108,17 @@ const newsPages = await Promise.all(
 );
 
 const publication = JSON.parse(await readFile(path.join(root, "src/content/publication.json"), "utf8"));
+const publicationsDir = path.join(root, "src/content/publications");
+const additionalPublications = await Promise.all((await readdir(publicationsDir))
+  .filter(file => file.endsWith(".json"))
+  .map(async file => JSON.parse(await readFile(path.join(publicationsDir, file), "utf8"))));
 const publicationPages = [
   { path: "/publications", title: "Публикации — АСКАО",
     description: "Научные статьи и экспертные материалы по вопросам строительного комплекса атомной отрасли." },
-  { path: `/publications/${publication.slug}`, title: `${publication.title} — АСКАО`,
-    description: publication.abstract, type: "article", schema: publication.schema },
+  ...[publication, ...additionalPublications].map(item => ({
+    path: `/publications/${item.slug}`, title: `${item.title} — АСКАО`,
+    description: item.abstract, type: "article", schema: item.schema,
+  })),
 ];
 const committeeDir = path.join(root, "src/content/cms/committees");
 const committeePages = await Promise.all((await readdir(committeeDir)).filter(file => file.endsWith(".json")).map(async file => {

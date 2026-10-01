@@ -1,0 +1,26 @@
+{
+  "slug": "ntc-veselovskogo-otechestvennye-materialy-2026",
+  "title": "НТЦ Р. А. Веселовского расширяет границы применения отечественных материалов",
+  "kind": "Интервью",
+  "credits": "Елена Громова, генеральный директор НТЦ Р. А. Веселовского",
+  "metadata": "«Строительная Орбита», № 06/2026 · страницы 92–95 · PDF",
+  "abstract": "В интервью журналу «Строительная Орбита» Елена Громова рассказывает о разработке и применении отечественных полимерных материалов «Силор-Ультра» и «Спрут+» для гидроизоляции, восстановления и защиты строительных конструкций.",
+  "context": "В материале рассматриваются промышленные и инфраструктурные объекты, применение полимерных систем в атомной отрасли, химически стойкие покрытия, усиление конструкций и подводный ремонт. Отдельное внимание уделено инженерному сопровождению работ, контролю качества и радонозащитным свойствам покрытий.",
+  "source": null,
+  "pdf": "/publications/files/ntc-veselovskogo-otechestvennye-materialy-2026.pdf",
+  "fileDetails": "Оригинальный материал в PDF · 2 разворота · страницы 92–95 · 157 КБ",
+  "downloadName": "NTC-Veselovskogo-Stroitelnaya-Orbita-06-2026.pdf",
+  "citation": "НТЦ Р. А. Веселовского расширяет границы применения отечественных материалов: интервью с Еленой Громовой // Строительная Орбита. 2026. № 06. С. 92–95.",
+  "schema": {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "НТЦ Р. А. Веселовского расширяет границы применения отечественных материалов",
+    "description": "Интервью с Еленой Громовой о полимерных материалах «Силор-Ультра» и «Спрут+» для гидроизоляции, восстановления и защиты строительных конструкций.",
+    "about": {"@type": "Organization", "name": "НТЦ Р. А. Веселовского"},
+    "isPartOf": {"@type": "PublicationIssue", "issueNumber": "06", "datePublished": "2026", "isPartOf": {"@type": "Periodical", "name": "Строительная Орбита"}},
+    "inLanguage": "ru-RU",
+    "url": "https://xn--80aa3arm.xn--p1ai/publications/ntc-veselovskogo-otechestvennye-materialy-2026",
+    "encoding": {"@type": "MediaObject", "contentUrl": "https://xn--80aa3arm.xn--p1ai/publications/files/ntc-veselovskogo-otechestvennye-materialy-2026.pdf", "encodingFormat": "application/pdf"},
+    "pagination": "92–95"
+  }
+}

@@ -5,10 +5,11 @@
 The live Publications section was synchronized into React source on 2026-09-22. Deploy the complete `dist/client` build; do not patch compiled JavaScript.
 
 - Publication data and scholarly metadata: `src/content/publication.json`.
+- Additional publication records: `src/content/publications/`; display order and shared metadata: `src/content/publications.ts`.
 - Publication list/detail: `src/pages/PublicationsPage.tsx`.
 - Original PDF: `public/publications/files/izvlechenie-bitumirovannyh-rao-2026.pdf`.
 - All news, including the publication announcement and SHOS: `src/content/cms/news/`.
-- `scripts/generate-seo.mjs` generates 23 current sitemap entries, metadata shells, preserved committee deep links and a noindex `404.html`.
+- `scripts/generate-seo.mjs` generates sitemap entries and metadata shells for all publication records, preserved committee deep links and a noindex `404.html`.
 
 ## Build and publish
 

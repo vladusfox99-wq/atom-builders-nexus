@@ -43,7 +43,7 @@ for (const url of ["http://xn--80aa3arm.xn--p1ai/news?audit=1", "https://www.xn-
   assert.equal(chain.at(-1).status, 200);
   result.push({ redirects: chain });
 }
-for (const path of ["/committees/international-cooperation", "/admin/", "/publications/files/izvlechenie-bitumirovannyh-rao-2026.pdf", "/favicon.png"]) {
+for (const path of ["/committees/international-cooperation", "/admin/", "/publications/files/izvlechenie-bitumirovannyh-rao-2026.pdf", "/publications/files/ntc-veselovskogo-otechestvennye-materialy-2026.pdf", "/favicon.png"]) {
   const item = await request(base + path);
   result.push({ ...item, body: undefined });
   assert.equal(item.status, 200, item.url);
