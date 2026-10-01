@@ -20,7 +20,8 @@ const contacts = [
   },
 ];
 
-const mapQuery = encodeURIComponent(address);
+const yandexMapUrl = "https://yandex.ru/maps/213/moscow/house/ulitsa_obrucheva_30_1s1/Z04YcwVnS0ABQFtvfXp0d35rYQ==/?ll=37.527255%2C55.656285&z=16";
+const yandexMapEmbedUrl = "https://yandex.ru/map-widget/v1/?ll=37.527256%2C55.656285&z=16&pt=37.527256%2C55.656285%2Cpm2rdm&l=map";
 
 const Contacts = () => {
   return (
@@ -60,7 +61,7 @@ const Contacts = () => {
                 <div className="mt-2 font-display text-xl font-semibold text-foreground">{address}</div>
               </div>
               <a
-                href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`}
+                href={yandexMapUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="hidden md:inline-flex flex-shrink-0 items-center justify-center border border-primary px-4 py-2 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
@@ -73,7 +74,7 @@ const Contacts = () => {
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/35 via-transparent to-transparent" />
               <iframe
                 title="Карта офиса АСКАО"
-                src={`https://www.google.com/maps?q=${mapQuery}&z=16&output=embed`}
+                src={yandexMapEmbedUrl}
                 className="h-[520px] w-full"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
