@@ -1,8 +1,12 @@
 import heroImg from "@/assets/hero-nuclear.webp";
+import ForumStrip from "./ForumStrip";
 
 const Hero = () => {
+  const showForum = Date.now() < Date.parse("2026-11-25T17:00:00+03:00");
+
   return (
-    <section className="relative min-h-screen flex items-end overflow-hidden pt-32 pb-36 md:pb-44">
+    <section className={`relative overflow-hidden pb-[clamp(64px,8vh,96px)] ${showForum ? "pt-[276px] md:pt-[252px]" : "pt-32"}`}>
+      {showForum && <ForumStrip />}
       <div className="absolute inset-0">
         <img src={heroImg} alt="Строительство АЭС" width={1920} height={1080} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-hero" />
@@ -11,7 +15,7 @@ const Hero = () => {
 
       <div className="absolute inset-0 bg-grid bg-grid-fade opacity-30" />
 
-      <div className="absolute top-32 right-8 hidden md:flex flex-col items-end gap-2 text-xs font-mono text-muted-foreground">
+      <div className={`absolute right-8 hidden md:flex flex-col items-end gap-2 text-xs font-mono text-muted-foreground ${showForum ? "top-[222px]" : "top-32"}`}>
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 bg-primary animate-pulse-glow" />
           <span>SYSTEM ONLINE · 2026</span>
@@ -23,8 +27,8 @@ const Hero = () => {
         <div className="max-w-5xl">
           <div className="section-label mb-8 animate-fade-in">Ассоциация · с 2018 года</div>
 
-          <h1 className="font-display text-[clamp(2rem,10vw,3rem)] sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight text-foreground animate-fade-in-up">
-            АСКАО — <span className="text-gradient">ядро</span> строительного комплекса <br className="hidden md:block" />
+          <h1 className="font-display text-[clamp(2rem,10vw,3rem)] sm:text-6xl md:text-7xl lg:text-7xl font-bold leading-[0.95] tracking-tight text-foreground animate-fade-in-up">
+            АСКАО —<br /> <span className="text-gradient">связующее звено</span><br /> строительного комплекса<br />
             атомной отрасли
           </h1>
 

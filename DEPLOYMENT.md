@@ -1,5 +1,9 @@
 # REG.RU production deployment
 
+## Production drift as of 2026-10-19
+
+Production has newer, manually patched assets for the forum strip, homepage headline, news and events that are not all represented in this repository. Do not run a full `dist/client` deployment until those live changes are reconciled into source; doing so would roll back current content. The homepage spacing fix was applied as a reversible CSS addition to the live `index.html`, preserving its existing import map and assets. Its previous HTML is backed up at `output/hero-spacing-20261019/index.before.html`. The homepage headline and forum strip have been reconciled in `src/components/askao/`, but news and events still need reconciliation. `scripts/verify-site.mjs` intentionally expects the local build's entry point and will fail against this newer production runtime until the drift is resolved.
+
 ## Source of truth
 
 The live Publications section was synchronized into React source on 2026-09-22. Deploy the complete `dist/client` build; do not patch compiled JavaScript.
