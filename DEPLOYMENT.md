@@ -6,6 +6,8 @@ Production has newer, manually patched assets for the forum strip, homepage head
 
 ## Source of truth
 
+Yandex Metrika counter `113671476` is loaded from `public/askao-metrika.js`. Retain its script and no-JavaScript pixel in all public page shells. See `ANALYTICS.md` for SPA tracking, event identifiers and the targeted production installer.
+
 The live Publications section was synchronized into React source on 2026-09-22. Deploy the complete `dist/client` build; do not patch compiled JavaScript.
 
 - Publication data and scholarly metadata: `src/content/publication.json`.
