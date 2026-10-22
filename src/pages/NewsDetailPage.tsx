@@ -151,6 +151,11 @@ const NewsDetailPage = () => {
                     <aside key={index} className="border-l-4 border-primary bg-navy p-6 md:p-8">
                       <h2 className="font-display text-xl font-semibold leading-snug text-foreground md:text-2xl">{block.title}</h2>
                       <p className="mt-3 whitespace-pre-line">{block.text}</p>
+                      {block.url && (
+                        <a href={block.url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex text-base font-semibold text-primary hover:underline">
+                          {block.linkLabel ?? block.url}
+                        </a>
+                      )}
                     </aside>
                   );
                 })}

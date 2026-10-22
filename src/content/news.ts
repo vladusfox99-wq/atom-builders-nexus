@@ -18,9 +18,9 @@ export interface NewsImage {
 export type NewsContentBlock = string
   | { type: "heading"; text: string }
   | { type: "list"; items: string[] }
-  | { type: "callout"; title: string; text: string };
+  | { type: "callout"; title: string; text: string; url?: string; linkLabel?: string };
 
-type CmsContentItem = string | { type?: string; text?: string; title?: string; items?: string[] };
+type CmsContentItem = string | { type?: string; text?: string; title?: string; items?: string[]; url?: string; linkLabel?: string };
 type CmsImageItem = string | { src?: string; alt?: string; fit?: "contain" | "cover" };
 type CmsNewsItem = Omit<Partial<NewsItem>, "content" | "images"> & {
   content?: CmsContentItem[];
@@ -51,7 +51,12 @@ const normalizeNewsItem = (raw: CmsNewsItem): NewsItem | null => {
         return { type: "heading", text: value.text };
       }
       if (value?.type === "callout" && typeof value.title === "string" && typeof value.text === "string") {
-        return { type: "callout", title: value.title, text: value.text };
+        return {
+          type: "callout", title: value.title, text: value.text,
+          ...(typeof value.url === "string" && /^https:\/\//.test(value.url)
+            ? { url: value.url, linkLabel: typeof value.linkLabel === "string" ? value.linkLabel : value.url }
+            : {}),
+        };
       }
       if (value && typeof value === "object" && typeof value.text === "string") return value.text;
       return null;
