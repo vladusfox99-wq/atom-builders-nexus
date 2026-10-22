@@ -6,6 +6,8 @@ Production has newer, manually patched assets for the forum strip, homepage head
 
 ## Source of truth
 
+The financial forum poster now uses the immutable path `/uploads/news/iii-finansovo-promyshlennyy-forum-2026-20261022.webp` in source. On the current production runtime, public HTML import maps route the news module through `/assets/news-forum-banner-20261022.js`, a small adapter that changes only this image URL while retaining all newer live news. The original compiled news module remains unchanged. Deployment snapshots are in `output/playwright/forum-banner-20261022/cache-fix/`. A future reconciled full build uses the source JSON directly and does not need that adapter.
+
 Yandex Metrika counter `113671476` is loaded from `public/askao-metrika.js`. Retain its script and no-JavaScript pixel in all public page shells. See `ANALYTICS.md` for SPA tracking, event identifiers and the targeted production installer.
 
 The live Publications section was synchronized into React source on 2026-09-22. Deploy the complete `dist/client` build; do not patch compiled JavaScript.
