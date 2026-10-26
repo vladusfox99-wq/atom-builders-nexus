@@ -10,6 +10,8 @@ The financial forum poster now uses the immutable path `/uploads/news/iii-finans
 
 For targeted news edits while the production drift remains, `scripts/update-reg-news.py --slug <slug> --release <unique-release> --host server174.hosting.reg.ru --user <deployment-user> --backup output/<release>/deployment` creates an immutable adapter from the source record, updates public import maps and the article's metadata, and verifies uploaded bytes. Reuse the same backup to resume an interrupted upload. Original HTML and the previous mapping are saved in the release directory. It retains other records by importing the previous news adapter; it is specific to the current checked production module exports and stops if those exports or mappings change.
 
+For a new article, add `--create`. The same installer uploads immutable images from the source record, creates the article shell before switching public import maps, inserts the record into the news list in date order, and appends its URL to the existing production sitemap without dropping other live URLs. The 2026-10-26 Uzatom conference report is stored at `src/content/cms/news/askao-konferentsiya-aes-uzbekistan-2026.json`; its release snapshots are in `output/playwright/uzatom-20261026/deployment/`.
+
 Yandex Metrika counter `113671476` is loaded from `public/askao-metrika.js`. Retain its script and no-JavaScript pixel in all public page shells. See `ANALYTICS.md` for SPA tracking, event identifiers and the targeted production installer.
 
 The live Publications section was synchronized into React source on 2026-09-22. Deploy the complete `dist/client` build; do not patch compiled JavaScript.
