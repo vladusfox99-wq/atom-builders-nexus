@@ -12,8 +12,8 @@ describe("CMS content", () => {
     expect(Array.isArray(committees)).toBe(true);
   });
 
-  it("hides the international cooperation committee from public content", () => {
-    expect(committees).not.toEqual(
+  it("lists the international cooperation committee in the public directory", () => {
+    expect(committees).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           id: "international-cooperation",
@@ -24,7 +24,7 @@ describe("CMS content", () => {
     );
   });
 
-  it("keeps the hidden international committee available by its direct link", () => {
+  it("keeps the international committee available by its direct link", () => {
     expect(getCommitteeById("international-cooperation")).toEqual(
       expect.objectContaining({
         title: "Комитет по международной политике АСКАО",
