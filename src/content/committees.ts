@@ -1,3 +1,5 @@
+import { isCommitteeHidden } from "./visibility";
+
 export interface CommitteeMember {
   name: string;
   organization?: string;
@@ -75,7 +77,7 @@ const allCommittees: Committee[] = Object.values(cmsCommitteeModules)
   .filter((committee): committee is Committee => committee !== null)
   .sort((left, right) => left.title.localeCompare(right.title, "ru"));
 
-export const committees = allCommittees;
+export const committees = allCommittees.filter((committee) => !isCommitteeHidden(committee.id));
 
 export const getCommitteeById = (committeeId: string | undefined) =>
   allCommittees.find((committee) => committee.id === committeeId);

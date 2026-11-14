@@ -72,6 +72,9 @@ const staticPages = [
   },
 ];
 
+const hiddenStaticPagePaths = new Set(["/committees"]);
+const visibleStaticPages = staticPages.filter((page) => !hiddenStaticPagePaths.has(page.path));
+
 const escapeXml = (value) =>
   value
     .replaceAll("&", "&amp;")
@@ -122,7 +125,7 @@ const committeePages = await Promise.all((await readdir(committeeDir)).filter(fi
   const item = JSON.parse(await readFile(path.join(committeeDir, file), "utf8"));
   return { path: `/committees/${item.id}`, title: `${item.title} — АСКАО`, description: item.description };
 }));
-const pages = [...staticPages, ...newsPages, ...publicationPages];
+const pages = [...visibleStaticPages, ...newsPages, ...publicationPages];
 // Hidden navigation is not a removed route. Keep existing committee deep links.
 const routePages = [...staticPages, ...newsPages, ...publicationPages, ...committeePages];
 const sitemapEntries = pages
